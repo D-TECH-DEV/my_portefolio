@@ -92,7 +92,7 @@
     <!-- Services Table -->
     <div class="admin-card">
         <div class="table-responsive">
-            <table id="servicesTable" class="admin-table table" style="width:100%">
+            <table id="servicesTable" class="admin-table" style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 80px;">N°</th>

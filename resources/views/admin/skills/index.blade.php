@@ -412,7 +412,7 @@
     <!-- List View (DataTable) -->
     <div id="listView" class="admin-card">
         <div class="table-responsive">
-            <table id="skillsTable" class="admin-table table" style="width:100%">
+            <table id="skillsTable" class="admin-table" style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 60px;">Icone</th>

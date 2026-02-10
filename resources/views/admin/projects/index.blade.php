@@ -92,7 +92,7 @@
     <!-- Projects Table -->
     <div class="admin-card">
         <div class="table-responsive">
-            <table id="projectsTable" class="admin-table table" style="width:100%">
+            <table id="projectsTable" class="admin-table " style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 80px;">Image</th>
