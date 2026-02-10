@@ -193,219 +193,54 @@
                     <i class="bi bi-list-ul"></i>
                 </button>
             </div>
-            <a href="{{ url('/admin/skills/create') }}" class="btn btn-admin-primary">
+            <a href="{{ route('admin.skills.create') }}" class="btn btn-admin-primary">
                 <i class="bi bi-plus-circle me-2"></i>Nouvelle Compétence
             </a>
         </div>
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert"
+            style="background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #28a745;">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                style="filter: invert(1);"></button>
+        </div>
+    @endif
+
     <!-- Grid View -->
     <div id="gridView" style="display: none;">
         <div class="row">
-            <!-- Skill Card 1 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
-                            alt="Flutter">
-                    </div>
-                    <div class="skill-name">Flutter</div>
-                    <div class="skill-category">Mobile</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 90%;"></div>
+            @foreach($skills as $skill)
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            @if($skill->image)
+                                <img src="{{ asset($skill->image) }}" alt="{{ $skill->name }}">
+                            @else
+                                <i class="bi bi-code-slash" style="font-size: 40px; color: var(--admin-accent);"></i>
+                            @endif
                         </div>
-                        <div class="skill-level-text">90%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/1') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                        <div class="skill-name">{{ $skill->name }}</div>
+                        <div class="skill-category">{{ $skill->category }}</div>
+                        <div class="skill-level">
+                            <div class="skill-level-bar">
+                                <div class="skill-level-fill" style="width: {{ $skill->proficiency }}%;"></div>
+                            </div>
+                            <div class="skill-level-text">{{ $skill->proficiency }}%</div>
+                        </div>
+                        <div class="skill-actions">
+                            <a href="{{ route('admin.skills.edit', $skill->id) }}" class="btn btn-sm btn-admin-secondary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                onclick="prepareDelete('{{ route('admin.skills.destroy', $skill->id) }}')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Skill Card 2 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg"
-                            alt="Laravel">
-                    </div>
-                    <div class="skill-name">Laravel</div>
-                    <div class="skill-category">Backend</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 95%;"></div>
-                        </div>
-                        <div class="skill-level-text">95%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/2') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skill Card 3 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
-                            alt="Spring Boot">
-                    </div>
-                    <div class="skill-name">Spring Boot</div>
-                    <div class="skill-category">Backend</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 85%;"></div>
-                        </div>
-                        <div class="skill-level-text">85%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/3') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skill Card 4 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
-                    </div>
-                    <div class="skill-name">React JS</div>
-                    <div class="skill-category">Frontend</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 80%;"></div>
-                        </div>
-                        <div class="skill-level-text">80%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/4') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skill Card 5 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
-                    </div>
-                    <div class="skill-name">Figma</div>
-                    <div class="skill-category">Design</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 85%;"></div>
-                        </div>
-                        <div class="skill-level-text">85%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/5') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skill Card 6 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-                            alt="Docker">
-                    </div>
-                    <div class="skill-name">Docker</div>
-                    <div class="skill-category">DevOps</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 75%;"></div>
-                        </div>
-                        <div class="skill-level-text">75%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/6') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skill Card 7 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-                            alt="PostgreSQL">
-                    </div>
-                    <div class="skill-name">PostgreSQL</div>
-                    <div class="skill-category">Base de données</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 85%;"></div>
-                        </div>
-                        <div class="skill-level-text">85%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/7') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skill Card 8 -->
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
-                    </div>
-                    <div class="skill-name">Git / GitHub</div>
-                    <div class="skill-category">DevOps</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar">
-                            <div class="skill-level-fill" style="width: 95%;"></div>
-                        </div>
-                        <div class="skill-level-text">95%</div>
-                    </div>
-                    <div class="skill-actions">
-                        <a href="{{ url('/admin/skills/edit/8') }}" class="btn btn-sm btn-admin-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
@@ -424,246 +259,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Item 1 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
-                                style="width: 40px; height: 40px;" alt="Flutter">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Flutter</strong>
-                        </td>
-                        <td>Mobile</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 90%;"></div>
+                    @foreach($skills as $skill)
+                        <tr>
+                            <td>
+                                @if($skill->image)
+                                    <img src="{{ asset($skill->image) }}" style="width: 40px; height: 40px; object-fit: contain;"
+                                        alt="{{ $skill->name }}">
+                                @else
+                                    <div
+                                        style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--admin-lighter); border-radius: 5px;">
+                                        <i class="bi bi-code-slash" style="color: var(--admin-accent);"></i>
+                                    </div>
+                                @endif
+                            </td>
+                            <td>
+                                <strong style="color: var(--admin-text-heading);">{{ $skill->name }}</strong>
+                            </td>
+                            <td>{{ $skill->category }}</td>
+                            <td style="width: 30%;">
+                                <div class="d-flex align-items-center">
+                                    <div class="skill-level-bar flex-grow-1 mb-0 me-3">
+                                        <div class="skill-level-fill" style="width: {{ $skill->proficiency }}%;"></div>
+                                    </div>
+                                    <span class="skill-level-text">{{ $skill->proficiency }}%</span>
                                 </div>
-                                <span class="skill-level-text">90%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">90</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/1') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Item 2 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg"
-                                style="width: 40px; height: 40px;" alt="Laravel">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Laravel</strong>
-                        </td>
-                        <td>Backend</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 95%;"></div>
-                                </div>
-                                <span class="skill-level-text">95%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">95</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/2') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Item 3 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
-                                style="width: 40px; height: 40px;" alt="Spring">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Spring Boot</strong>
-                        </td>
-                        <td>Backend</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 85%;"></div>
-                                </div>
-                                <span class="skill-level-text">85%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">85</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/3') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Item 4 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
-                                style="width: 40px; height: 40px;" alt="React">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">React JS</strong>
-                        </td>
-                        <td>Frontend</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 80%;"></div>
-                                </div>
-                                <span class="skill-level-text">80%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">80</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/4') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Item 5 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
-                                style="width: 40px; height: 40px;" alt="Figma">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Figma</strong>
-                        </td>
-                        <td>Design</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 85%;"></div>
-                                </div>
-                                <span class="skill-level-text">85%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">85</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/5') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Item 6 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-                                style="width: 40px; height: 40px;" alt="Docker">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Docker</strong>
-                        </td>
-                        <td>DevOps</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 75%;"></div>
-                                </div>
-                                <span class="skill-level-text">75%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">75</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/6') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Item 7 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-                                style="width: 40px; height: 40px;" alt="PostgreSQL">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">PostgreSQL</strong>
-                        </td>
-                        <td>Base de données</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 85%;"></div>
-                                </div>
-                                <span class="skill-level-text">85%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">85</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/7') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Item 8 -->
-                    <tr>
-                        <td>
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
-                                style="width: 40px; height: 40px;" alt="Git">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Git / GitHub</strong>
-                        </td>
-                        <td>DevOps</td>
-                        <td style="width: 30%;">
-                            <div class="d-flex align-items-center">
-                                <div class="skill-level-bar flex-grow-1 mb-0 me-3">
-                                    <div class="skill-level-fill" style="width: 95%;"></div>
-                                </div>
-                                <span class="skill-level-text">95%</span>
-                            </div>
-                        </td>
-                        <td style="display:none;">95</td>
-                        <td>
-                            <a href="{{ url('/admin/skills/edit/8') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+                            </td>
+                            <td style="display:none;">{{ $skill->proficiency }}</td>
+                            <td>
+                                <a href="{{ route('admin.skills.edit', $skill->id) }}"
+                                    class="btn btn-sm btn-admin-secondary me-1" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    onclick="prepareDelete('{{ route('admin.skills.destroy', $skill->id) }}')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -683,7 +317,11 @@
                 </div>
                 <div class="modal-footer" style="border-top: 1px solid var(--admin-border);">
                     <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-danger">Supprimer</button>
+                    <form id="deleteForm" action="" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -727,6 +365,10 @@
                 document.getElementById('listView').style.display = 'block';
                 document.getElementById('btnList').classList.add('active');
             }
+        }
+
+        function prepareDelete(action) {
+            document.getElementById('deleteForm').action = action;
         }
     </script>
 @endsection

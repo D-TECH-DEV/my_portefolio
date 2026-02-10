@@ -83,11 +83,20 @@
             <p style="color: var(--admin-text-base);">Gérez les services que vous proposez</p>
         </div>
         <div class="col-md-6 text-end">
-            <a href="{{ url('/admin/services/create') }}" class="btn btn-admin-primary">
+            <a href="{{ route('admin.services.create') }}" class="btn btn-admin-primary">
                 <i class="bi bi-plus-circle me-2"></i>Nouveau Service
             </a>
         </div>
     </div>
+
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert"
+            style="background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #28a745;">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                style="filter: invert(1);"></button>
+        </div>
+    @endif
 
     <!-- Services Table -->
     <div class="admin-card">
@@ -103,191 +112,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <div
-                                style="width: 50px; height: 50px; border-radius: 10px; background: var(--admin-lighter); display: flex; align-items: center; justify-content: center; color: var(--admin-accent); font-size: 20px; font-weight: 700;">
-                                01
-                            </div>
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Programmation & Développement</strong>
-                        </td>
-                        <td style="max-width: 400px;">Sites vitrines pro, applications web sur mesure et systèmes de gestion
-                            adaptés.</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="cursor: pointer;">
-                                <label class="form-check-label"
-                                    style="color: var(--admin-text-base); font-size: 13px;">Actif</label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ url('/admin/services/edit/1') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div
-                                style="width: 50px; height: 50px; border-radius: 10px; background: var(--admin-lighter); display: flex; align-items: center; justify-content: center; color: var(--admin-accent); font-size: 20px; font-weight: 700;">
-                                02
-                            </div>
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Maintenance Informatique</strong>
-                        </td>
-                        <td style="max-width: 400px;">Maintenance système et logicielle, dépannage, optimisation et sécurité
-                            assurée.</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="cursor: pointer;">
-                                <label class="form-check-label"
-                                    style="color: var(--admin-text-base); font-size: 13px;">Actif</label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ url('/admin/services/edit/2') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div
-                                style="width: 50px; height: 50px; border-radius: 10px; background: var(--admin-lighter); display: flex; align-items: center; justify-content: center; color: var(--admin-accent); font-size: 20px; font-weight: 700;">
-                                03
-                            </div>
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Design & Identité Visuelle</strong>
-                        </td>
-                        <td style="max-width: 400px;">Design web moderne, supports digitaux et interfaces claires et
-                            impactantes.</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="cursor: pointer;">
-                                <label class="form-check-label"
-                                    style="color: var(--admin-text-base); font-size: 13px;">Actif</label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ url('/admin/services/edit/3') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div
-                                style="width: 50px; height: 50px; border-radius: 10px; background: var(--admin-lighter); display: flex; align-items: center; justify-content: center; color: var(--admin-accent); font-size: 20px; font-weight: 700;">
-                                04
-                            </div>
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Automatisation & DevOps</strong>
-                        </td>
-                        <td style="max-width: 400px;">Automatisation des déploiements avec Git, GitHub et Docker pour une
-                            mise en production fluide.</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="cursor: pointer;">
-                                <label class="form-check-label"
-                                    style="color: var(--admin-text-base); font-size: 13px;">Actif</label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ url('/admin/services/edit/4') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div
-                                style="width: 50px; height: 50px; border-radius: 10px; background: var(--admin-lighter); display: flex; align-items: center; justify-content: center; color: var(--admin-accent); font-size: 20px; font-weight: 700;">
-                                05
-                            </div>
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Création d'API RESTful</strong>
-                        </td>
-                        <td style="max-width: 400px;">Développement d'interfaces robustes pour interconnecter vos services
-                            numériques.</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="cursor: pointer;">
-                                <label class="form-check-label"
-                                    style="color: var(--admin-text-base); font-size: 13px;">Actif</label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ url('/admin/services/edit/5') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div
-                                style="width: 50px; height: 50px; border-radius: 10px; background: var(--admin-lighter); display: flex; align-items: center; justify-content: center; color: var(--admin-accent); font-size: 20px; font-weight: 700;">
-                                06
-                            </div>
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Conseil & Stratégie</strong>
-                        </td>
-                        <td style="max-width: 400px;">Accompagnement stratégique pour renforcer votre crédibilité et générer
-                            de vrais résultats.</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked style="cursor: pointer;">
-                                <label class="form-check-label"
-                                    style="color: var(--admin-text-base); font-size: 13px;">Actif</label>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ url('/admin/services/edit/6') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    @foreach($services as $service)
+                        <tr>
+                            <td>
+                                <div
+                                    style="width: 50px; height: 50px; border-radius: 10px; background: var(--admin-lighter); display: flex; align-items: center; justify-content: center; color: var(--admin-accent); font-size: 20px; font-weight: 700;">
+                                    {{ $service->order ?? '-' }}
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--admin-text-heading);">{{ $service->title }}</strong>
+                            </td>
+                            <td style="max-width: 400px;">{{ Str::limit($service->description, 100) }}</td>
+                            <td>
+                                <i class="bi bi-{{ $service->icon }}" style="font-size: 24px; color: var(--admin-accent);"></i>
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.services.edit', $service->id) }}"
+                                    class="btn btn-sm btn-admin-secondary me-1" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    onclick="prepareDelete('{{ route('admin.services.destroy', $service->id) }}')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -307,7 +159,11 @@
                 </div>
                 <div class="modal-footer" style="border-top: 1px solid var(--admin-border);">
                     <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-danger">Supprimer</button>
+                    <form id="deleteForm" action="" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -334,5 +190,9 @@
                 ]
             });
         });
+
+        function prepareDelete(action) {
+            document.getElementById('deleteForm').action = action;
+        }
     </script>
 @endsection

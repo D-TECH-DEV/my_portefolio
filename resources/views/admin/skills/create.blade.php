@@ -92,7 +92,8 @@
         </div>
     </div>
 
-    <form>
+    <form action="{{ route('admin.skills.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="row">
             <!-- Main Form -->
             <div class="col-lg-8">
@@ -102,29 +103,29 @@
                     <!-- Skill Name -->
                     <div class="mb-4">
                         <label class="admin-form-label">Nom de la Compétence *</label>
-                        <input type="text" class="form-control admin-form-control"
+                        <input type="text" name="name" class="form-control admin-form-control"
                             placeholder="Ex: Laravel, React, Docker..." required>
                     </div>
 
                     <!-- Category -->
                     <div class="mb-4">
                         <label class="admin-form-label">Catégorie *</label>
-                        <select class="form-select admin-form-control" required>
+                        <select name="category" class="form-select admin-form-control" required>
                             <option value="">Sélectionner une catégorie</option>
-                            <option>Frontend</option>
-                            <option>Backend</option>
-                            <option>Mobile</option>
-                            <option>Base de données</option>
-                            <option>DevOps</option>
-                            <option>Design</option>
-                            <option>Autre</option>
+                            <option value="Frontend">Frontend</option>
+                            <option value="Backend">Backend</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="Base de données">Base de données</option>
+                            <option value="DevOps">DevOps</option>
+                            <option value="Design">Design</option>
+                            <option value="Autre">Autre</option>
                         </select>
                     </div>
 
-                    <!-- Description -->
+                    <!-- Description (Not in fillable yet, but kept corresponding to UI) -->
                     <div class="mb-4">
                         <label class="admin-form-label">Description (optionnel)</label>
-                        <textarea class="form-control admin-form-control" rows="4"
+                        <textarea name="description" class="form-control admin-form-control" rows="4"
                             placeholder="Décrivez votre niveau d'expertise et vos réalisations avec cette technologie..."></textarea>
                     </div>
 
@@ -133,8 +134,8 @@
                         <label class="admin-form-label">Niveau de Maîtrise *</label>
                         <div class="level-slider-container">
                             <div class="level-value-display" id="levelDisplay">50%</div>
-                            <input type="range" class="level-slider" id="levelSlider" min="0" max="100" value="50"
-                                oninput="updateLevel(this.value)">
+                            <input type="range" name="proficiency" class="level-slider" id="levelSlider" min="0" max="100"
+                                value="50" oninput="updateLevel(this.value)">
                             <div class="level-labels">
                                 <span>Débutant</span>
                                 <span>Intermédiaire</span>
@@ -144,10 +145,11 @@
                         </div>
                     </div>
 
-                    <!-- Years of Experience -->
+                    <!-- Years of Experience (Not in fillable yet) -->
                     <div class="mb-4">
                         <label class="admin-form-label">Années d'Expérience</label>
-                        <input type="number" class="form-control admin-form-control" placeholder="Ex: 3" min="0" max="50">
+                        <input type="number" name="years_of_experience" class="form-control admin-form-control"
+                            placeholder="Ex: 3" min="0" max="50">
                     </div>
                 </div>
             </div>
@@ -163,7 +165,8 @@
                         <p style="color: var(--admin-text-heading); margin: 10px 0 5px;">Cliquez pour télécharger</p>
                         <small style="color: var(--admin-text-base);">PNG, SVG, JPG jusqu'à 2MB</small>
                     </div>
-                    <input type="file" id="iconInput" accept="image/*" style="display: none;" onchange="previewIcon(event)">
+                    <input type="file" name="image" id="iconInput" accept="image/*" style="display: none;"
+                        onchange="previewIcon(event)">
                     <img id="iconPreview" class="icon-preview" alt="Preview">
                     <button type="button" class="btn btn-danger btn-sm w-100 mt-2" id="removeIconBtn" style="display: none;"
                         onclick="removeIcon()">
@@ -185,14 +188,16 @@
                     <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">Options</h5>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="activeSwitch" checked style="cursor: pointer;">
+                        <input class="form-check-input" type="checkbox" name="is_active" id="activeSwitch" checked
+                            style="cursor: pointer;">
                         <label class="form-check-label admin-form-label" for="activeSwitch" style="cursor: pointer;">
                             Compétence active
                         </label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="featuredSwitch" style="cursor: pointer;">
+                        <input class="form-check-input" type="checkbox" name="is_featured" id="featuredSwitch"
+                            style="cursor: pointer;">
                         <label class="form-check-label admin-form-label" for="featuredSwitch" style="cursor: pointer;">
                             Afficher en vedette
                         </label>
@@ -200,7 +205,7 @@
 
                     <div class="mb-3">
                         <label class="admin-form-label">Ordre d'affichage</label>
-                        <input type="number" class="form-control admin-form-control" value="0" min="0">
+                        <input type="number" name="order" class="form-control admin-form-control" value="0" min="0">
                         <small style="color: var(--admin-text-base);">Plus le nombre est petit, plus la compétence apparaît
                             en premier</small>
                     </div>
@@ -211,7 +216,7 @@
                     <button type="submit" class="btn btn-admin-primary w-100 mb-2">
                         <i class="bi bi-check-circle me-2"></i>Créer la Compétence
                     </button>
-                    <a href="{{ url('/admin/skills') }}" class="btn btn-admin-secondary w-100">
+                    <a href="{{ route('admin.skills') }}" class="btn btn-admin-secondary w-100">
                         <i class="bi bi-x-circle me-2"></i>Annuler
                     </a>
                 </div>

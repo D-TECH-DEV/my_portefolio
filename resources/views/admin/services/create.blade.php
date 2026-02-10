@@ -16,7 +16,8 @@
         </div>
     </div>
 
-    <form>
+    <form action="{{ route('admin.services.store') }}" method="POST">
+        @csrf
         <div class="row">
             <!-- Main Form -->
             <div class="col-lg-8">
@@ -25,38 +26,39 @@
 
                     <!-- Service Number -->
                     <div class="mb-4">
-                        <label class="admin-form-label">Numéro du Service *</label>
-                        <input type="text" class="form-control admin-form-control" placeholder="Ex: 01, 02, 03..." required>
+                        <label class="admin-form-label">Numéro d'affichage (Order) *</label>
+                        <input type="number" name="order" class="form-control admin-form-control"
+                            placeholder="Ex: 1, 2, 3..." required>
                         <small style="color: var(--admin-text-base);">
                             <i class="bi bi-info-circle me-1"></i>
-                            Numéro d'affichage du service (01-99)
+                            Numéro d'ordre d'affichage
                         </small>
                     </div>
 
                     <!-- Title -->
                     <div class="mb-4">
                         <label class="admin-form-label">Titre du Service *</label>
-                        <input type="text" class="form-control admin-form-control"
+                        <input type="text" name="title" class="form-control admin-form-control"
                             placeholder="Ex: Programmation & Développement" required>
                     </div>
 
                     <!-- Description -->
                     <div class="mb-4">
                         <label class="admin-form-label">Description *</label>
-                        <textarea class="form-control admin-form-control" rows="5"
+                        <textarea name="description" class="form-control admin-form-control" rows="5"
                             placeholder="Décrivez votre service en détail..." required></textarea>
                     </div>
 
                     <!-- Icon Selection -->
                     <div class="mb-4">
-                        <label class="admin-form-label">Icône Bootstrap Icons</label>
+                        <label class="admin-form-label">Icône Bootstrap Icons *</label>
                         <div class="input-group">
                             <span class="input-group-text"
                                 style="background: var(--admin-lighter); border-color: var(--admin-border); color: var(--admin-text-base);">
                                 <i class="bi bi-code-slash" id="iconPreview"></i>
                             </span>
-                            <input type="text" class="form-control admin-form-control" id="iconInput"
-                                placeholder="Ex: code-slash, briefcase, palette..." onkeyup="updateIconPreview()">
+                            <input type="text" name="icon" class="form-control admin-form-control" id="iconInput"
+                                placeholder="Ex: code-slash, briefcase, palette..." onkeyup="updateIconPreview()" required>
                         </div>
                         <small style="color: var(--admin-text-base);">
                             <i class="bi bi-info-circle me-1"></i>
@@ -66,18 +68,13 @@
                         </small>
                     </div>
 
-                    <!-- Features List -->
-                    <div class="mb-4">
-                        <label class="admin-form-label">Points Clés (optionnel)</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control admin-form-control" id="featureInput"
-                                placeholder="Ex: Sites vitrines professionnels">
-                            <button class="btn btn-admin-primary" type="button" onclick="addFeature()">
-                                <i class="bi bi-plus"></i> Ajouter
-                            </button>
+                    <!-- Features List (Not implemented in backend yet) -->
+                    <!-- 
+                        <div class="mb-4">
+                            <label class="admin-form-label">Points Clés (optionnel)</label>
+                            ...
                         </div>
-                        <div id="featuresList"></div>
-                    </div>
+                        -->
                 </div>
             </div>
 
@@ -88,24 +85,19 @@
                     <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">Options</h5>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="activeSwitch" checked style="cursor: pointer;">
+                        <input class="form-check-input" type="checkbox" id="activeSwitch" checked style="cursor: pointer;"
+                            disabled>
                         <label class="form-check-label admin-form-label" for="activeSwitch" style="cursor: pointer;">
-                            Service actif
+                            Service actif (Bientôt disponible)
                         </label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="featuredSwitch" style="cursor: pointer;">
+                        <input class="form-check-input" type="checkbox" id="featuredSwitch" style="cursor: pointer;"
+                            disabled>
                         <label class="form-check-label admin-form-label" for="featuredSwitch" style="cursor: pointer;">
-                            Afficher en vedette
+                            Afficher en vedette (Bientôt disponible)
                         </label>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="admin-form-label">Ordre d'affichage</label>
-                        <input type="number" class="form-control admin-form-control" value="0" min="0">
-                        <small style="color: var(--admin-text-base);">Plus le nombre est petit, plus le service apparaît en
-                            premier</small>
                     </div>
                 </div>
 
@@ -129,7 +121,7 @@
                     <button type="submit" class="btn btn-admin-primary w-100 mb-2">
                         <i class="bi bi-check-circle me-2"></i>Créer le Service
                     </button>
-                    <a href="{{ url('/admin/services') }}" class="btn btn-admin-secondary w-100">
+                    <a href="{{ route('admin.services') }}" class="btn btn-admin-secondary w-100">
                         <i class="bi bi-x-circle me-2"></i>Annuler
                     </a>
                 </div>
@@ -163,9 +155,9 @@
             const list = document.getElementById('featuresList');
             list.innerHTML = features.map(feature =>
                 `<div style="background: var(--admin-lighter); border: 1px solid var(--admin-border); padding: 10px 15px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: var(--admin-text-heading);">${feature}</span>
-                    <i class="bi bi-x-circle" style="color: #dc3545; cursor: pointer;" onclick="removeFeature('${feature}')"></i>
-                </div>`
+                        <span style="color: var(--admin-text-heading);">${feature}</span>
+                        <i class="bi bi-x-circle" style="color: #dc3545; cursor: pointer;" onclick="removeFeature('${feature}')"></i>
+                    </div>`
             ).join('');
         }
 

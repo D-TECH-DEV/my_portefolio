@@ -91,7 +91,9 @@
         </div>
     </div>
 
-    <form>
+    <form action="{{ route('admin.skills.update', $skill->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         <div class="row">
             <!-- Main Form -->
             <div class="col-lg-8">
@@ -101,38 +103,37 @@
                     <!-- Skill Name -->
                     <div class="mb-4">
                         <label class="admin-form-label">Nom de la Compétence *</label>
-                        <input type="text" class="form-control admin-form-control" value="Laravel" required>
+                        <input type="text" name="name" class="form-control admin-form-control"
+                            value="{{ old('name', $skill->name) }}" required>
                     </div>
 
                     <!-- Category -->
                     <div class="mb-4">
                         <label class="admin-form-label">Catégorie *</label>
-                        <select class="form-select admin-form-control" required>
+                        <select name="category" class="form-select admin-form-control" required>
                             <option value="">Sélectionner une catégorie</option>
-                            <option>Frontend</option>
-                            <option selected>Backend</option>
-                            <option>Mobile</option>
-                            <option>Base de données</option>
-                            <option>DevOps</option>
-                            <option>Design</option>
-                            <option>Autre</option>
+                            @foreach(['Frontend', 'Backend', 'Mobile', 'Base de données', 'DevOps', 'Design', 'Autre'] as $cat)
+                                <option value="{{ $cat }}" {{ old('category', $skill->category) == $cat ? 'selected' : '' }}>
+                                    {{ $cat }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <!-- Description -->
                     <div class="mb-4">
                         <label class="admin-form-label">Description (optionnel)</label>
-                        <textarea class="form-control admin-form-control"
-                            rows="4">Framework PHP moderne et élégant pour le développement d'applications web robustes et scalables. Expertise approfondie dans la création d'API RESTful, l'architecture MVC et l'utilisation d'Eloquent ORM.</textarea>
+                        <textarea name="description" class="form-control admin-form-control"
+                            rows="4">{{ old('description', $skill->description ?? '') }}</textarea>
                     </div>
 
                     <!-- Skill Level -->
                     <div class="mb-4">
                         <label class="admin-form-label">Niveau de Maîtrise *</label>
                         <div class="level-slider-container">
-                            <div class="level-value-display" id="levelDisplay">95%</div>
-                            <input type="range" class="level-slider" id="levelSlider" min="0" max="100" value="95"
-                                oninput="updateLevel(this.value)">
+                            <div class="level-value-display" id="levelDisplay">
+                                {{ old('proficiency', $skill->proficiency) }}%</div>
+                            <input type="range" name="proficiency" class="level-slider" id="levelSlider" min="0" max="100"
+                                value="{{ old('proficiency', $skill->proficiency) }}" oninput="updateLevel(this.value)">
                             <div class="level-labels">
                                 <span>Débutant</span>
                                 <span>Intermédiaire</span>
@@ -145,7 +146,8 @@
                     <!-- Years of Experience -->
                     <div class="mb-4">
                         <label class="admin-form-label">Années d'Expérience</label>
-                        <input type="number" class="form-control admin-form-control" value="4" min="0" max="50">
+                        <input type="number" name="years_of_experience" class="form-control admin-form-control"
+                            value="{{ old('years_of_experience', $skill->years_of_experience ?? 0) }}" min="0" max="50">
                     </div>
                 </div>
             </div>
@@ -161,11 +163,13 @@
                         <p style="color: var(--admin-text-heading); margin: 10px 0 5px;">Cliquez pour changer</p>
                         <small style="color: var(--admin-text-base);">PNG, SVG, JPG jusqu'à 2MB</small>
                     </div>
-                    <input type="file" id="iconInput" accept="image/*" style="display: none;" onchange="previewIcon(event)">
+                    <input type="file" name="image" id="iconInput" accept="image/*" style="display: none;"
+                        onchange="previewIcon(event)">
                     <img id="iconPreview" class="icon-preview"
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" alt="Preview">
-                    <button type="button" class="btn btn-danger btn-sm w-100 mt-2" id="removeIconBtn"
-                        onclick="removeIcon()">
+                        src="{{ $skill->image ? asset($skill->image) : 'https://via.placeholder.com/100/142850/aab8c5?text=No+Icon' }}"
+                        style="{{ $skill->image ? 'display:block;' : 'display:none;' }}" alt="Preview">
+                    <button type="button" class="btn btn-danger btn-sm w-100 mt-2" id="removeIconBtn" onclick="removeIcon()"
+                        style="{{ $skill->image ? 'display:block;' : 'display:none;' }}">
                         <i class="bi bi-trash me-1"></i>Supprimer l'icône
                     </button>
 
@@ -184,15 +188,14 @@
                     <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">Options</h5>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="activeSwitch" checked style="cursor: pointer;">
+                        <input class="form-check-input" type="checkbox" name="is_active" id="activeSwitch" {{ old('is_active', $skill->is_active ?? true) ? 'checked' : '' }} style="cursor: pointer;">
                         <label class="form-check-label admin-form-label" for="activeSwitch" style="cursor: pointer;">
                             Compétence active
                         </label>
                     </div>
 
                     <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="featuredSwitch" checked
-                            style="cursor: pointer;">
+                        <input class="form-check-input" type="checkbox" name="is_featured" id="featuredSwitch" {{ old('is_featured', $skill->is_featured ?? false) ? 'checked' : '' }} style="cursor: pointer;">
                         <label class="form-check-label admin-form-label" for="featuredSwitch" style="cursor: pointer;">
                             Afficher en vedette
                         </label>
@@ -200,7 +203,8 @@
 
                     <div class="mb-3">
                         <label class="admin-form-label">Ordre d'affichage</label>
-                        <input type="number" class="form-control admin-form-control" value="1" min="0">
+                        <input type="number" name="order" class="form-control admin-form-control"
+                            value="{{ old('order', $skill->order ?? 0) }}" min="0">
                         <small style="color: var(--admin-text-base);">Plus le nombre est petit, plus la compétence apparaît
                             en premier</small>
                     </div>
@@ -211,7 +215,7 @@
                     <button type="submit" class="btn btn-admin-primary w-100 mb-2">
                         <i class="bi bi-check-circle me-2"></i>Enregistrer les Modifications
                     </button>
-                    <a href="{{ url('/admin/skills') }}" class="btn btn-admin-secondary w-100">
+                    <a href="{{ route('admin.skills') }}" class="btn btn-admin-secondary w-100">
                         <i class="bi bi-x-circle me-2"></i>Annuler
                     </a>
                 </div>
