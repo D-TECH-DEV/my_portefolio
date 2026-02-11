@@ -10,8 +10,10 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Service::orderBy('order')->get();
-        return view("admin.services.index", compact('services'));
+        $data = [
+            "services" => Service::where("deleted", 0)->orderBy('order')->get()
+        ];
+        return view("admin.services.index", $data);
     }
 
     public function create()
@@ -37,11 +39,15 @@ class ServiceController extends Controller
 
     public function edit(Service $service)
     {
-        return view("admin.services.edit", compact('service'));
+        $data = [
+            "service" => $service
+        ];
+        return view("admin.services.edit", $data);
     }
 
     public function update(Request $request, Service $service)
     {
+        // @dd($request->all());
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required',
@@ -58,7 +64,9 @@ class ServiceController extends Controller
 
     public function destroy(Service $service)
     {
-        $service->delete();
+        $service->update([
+            "deleted" => 1
+        ]);
 
         return redirect()->route('admin.services')->with('success', 'Service supprimé avec succès.');
     }

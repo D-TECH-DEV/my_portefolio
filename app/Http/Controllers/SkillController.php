@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
@@ -80,6 +81,14 @@ class SkillController extends Controller
         $skill->update($input);
 
         return redirect()->route('admin.skills')->with('success', 'Compétence mise à jour avec succès.');
+    }
+
+    public function detail (Project $project) {
+
+        $data = [
+            "project" => $project
+        ];
+        return view("project-details");
     }
 
     public function destroy(Skill $skill)

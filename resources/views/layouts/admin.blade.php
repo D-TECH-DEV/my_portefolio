@@ -513,7 +513,7 @@
         <nav class="admin-nav">
             <div class="admin-nav-item">
                 <a href="{{ route('admin') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.') ? 'active' : '' }} ">
+                    class="admin-nav-link {{ request()->routeIs('admin') ? 'active' : '' }} ">
                     <i class="bi bi-speedometer2"></i>
                     <span>Dashboard</span>
                 </a>
@@ -521,7 +521,7 @@
 
             <div class="admin-nav-item">
                 <a href="{{ route('admin.projects') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.projects') ? 'active' : '' }} ">
+                    class="admin-nav-link {{ request()->routeIs('admin.projects*') ? 'active' : '' }} ">
                     <i class="bi bi-folder"></i>
                     <span>Projets</span>
                 </a>
@@ -529,7 +529,7 @@
 
             <div class="admin-nav-item">
                 <a href="{{ route('admin.skills') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.skills') ? 'active' : '' }} ">
+                    class="admin-nav-link {{ request()->routeIs('admin.skills*') ? 'active' : '' }} ">
                     <i class="bi bi-star"></i>
                     <span>Compétences</span>
                 </a>
@@ -537,14 +537,14 @@
 
             <div class="admin-nav-item">
                 <a href="{{ route('admin.services') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.services') ? 'active' : '' }} ">
+                    class="admin-nav-link {{ request()->routeIs('admin.services*') ? 'active' : '' }} ">
                     <i class="bi bi-briefcase"></i>
                     <span>Services</span>
                 </a>
             </div>
 
             <div class="admin-nav-item">
-                <a href="#" class="admin-nav-link {{ request()->routeIs('admin') ? 'active' : '' }}">
+                <a href="#" class="admin-nav-link {{ request()->routeIs('admin.blog*') ? 'active' : '' }}">
                     <i class="bi bi-newspaper"></i>
                     <span>Blog</span>
                 </a>
@@ -552,7 +552,7 @@
 
             <div class="admin-nav-item">
                 <a href="{{ route('admin.messages') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.messages') ? 'active' : '' }} ">
+                    class="admin-nav-link {{ request()->routeIs('admin.messages*') ? 'active' : '' }} ">
                     <i class="bi bi-envelope"></i>
                     <span>Messages</span>
                 </a>

@@ -16,7 +16,9 @@
         </div>
     </div>
 
-    <form>
+    <form method="post" action="{{ route("admin.services.update", ["service" => $service]) }}">
+        @method("PUT")
+        @csrf
         <div class="row">
             <!-- Main Form -->
             <div class="col-lg-8">
@@ -26,7 +28,7 @@
                     <!-- Service Number -->
                     <div class="mb-4">
                         <label class="admin-form-label">Numéro du Service *</label>
-                        <input type="text" class="form-control admin-form-control" value="01" required>
+                        <input type="text" class="form-control admin-form-control" name="order" value="{{ $service->order }}" required>
                         <small style="color: var(--admin-text-base);">
                             <i class="bi bi-info-circle me-1"></i>
                             Numéro d'affichage du service (01-99)
@@ -36,15 +38,15 @@
                     <!-- Title -->
                     <div class="mb-4">
                         <label class="admin-form-label">Titre du Service *</label>
-                        <input type="text" class="form-control admin-form-control" value="Programmation & Développement"
+                        <input type="text" class="form-control admin-form-control" name="title" value="{{ $service->title }}"
                             required>
                     </div>
 
                     <!-- Description -->
                     <div class="mb-4">
                         <label class="admin-form-label">Description *</label>
-                        <textarea class="form-control admin-form-control" rows="5"
-                            required>Sites vitrines pro, applications web sur mesure et systèmes de gestion adaptés.</textarea>
+                        <textarea class="form-control admin-form-control" name="description" rows="5"
+                            required>{{ $service->description }}</textarea>
                     </div>
 
                     <!-- Icon Selection -->
@@ -55,7 +57,7 @@
                                 style="background: var(--admin-lighter); border-color: var(--admin-border); color: var(--admin-text-base);">
                                 <i class="bi bi-code-slash" id="iconPreview"></i>
                             </span>
-                            <input type="text" class="form-control admin-form-control" id="iconInput" value="code-slash"
+                            <input type="text" name="icon" class="form-control admin-form-control" id="iconInput" value="code-slash"
                                 onkeyup="updateIconPreview()">
                         </div>
                         <small style="color: var(--admin-text-base);">
@@ -117,7 +119,7 @@
 
                     <div class="mb-3">
                         <label class="admin-form-label">Ordre d'affichage</label>
-                        <input type="number" class="form-control admin-form-control" value="1" min="0">
+                        <input type="number" class="form-control admin-form-control" value="{{ $service->order }}" min="0">
                         <small style="color: var(--admin-text-base);">Plus le nombre est petit, plus le service apparaît en
                             premier</small>
                     </div>

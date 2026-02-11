@@ -4,13 +4,14 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\FrontController;
 
-Route::get('/', function () {
-    return view('index');
-})->name("index");
+Route::get('/', [FrontController::class, "index"])->name("index");
 Route::get("/blog-details", function () {
     return view("blog-details");
 })->name("blog.detail");
+
+Route::get('/detail-projet/{project}', [SkillController::class, "detail"])->name("project.detail");
 
 Route::prefix("/admin")->group(function () {
     Route::get('/', function () {

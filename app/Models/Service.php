@@ -14,5 +14,6 @@ class Service extends Model
         'description',
         'icon',
         'order',
+        'deleted'
     ];
 }

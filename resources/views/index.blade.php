@@ -251,68 +251,26 @@
                 </div>
             </div>
             <div class="row">
+                @forelse ($services as $service)
+                    
+                
                 <div class="col-lg-6">
                     <div class="service-item wow fadeInUp delay-0-2s">
-                        <div class="number">01.</div>
+                        <div class="number">{{ "$service->order." }}</div>
                         <div class="content">
-                            <h4>Programmation & Développement</h4>
-                            <p>Sites vitrines pro, applications web sur mesure et systèmes de gestion adaptés.</p>
+                            <h4>{{ $service->title }}</h4>
+                            <p>{{ $service->description }}</p>
                         </div>
-                        <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a>
+                        {{-- <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a> --}}
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="service-item wow fadeInUp delay-0-4s">
-                        <div class="number">02.</div>
-                        <div class="content">
-                            <h4>Maintenance Informatique</h4>
-                            <p>Maintenance système et logicielle, dépannage, optimisation et sécurité assurée.</p>
-                        </div>
-                        <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a>
+
+                @empty
+                    <div class="text-center">
+                        <span>Aucun service disponible</span>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-item wow fadeInUp delay-0-2s">
-                        <div class="number">03.</div>
-                        <div class="content">
-                            <h4>Design & Identité Visuelle</h4>
-                            <p>Design web moderne, supports digitaux et interfaces claires et impactantes.</p>
-                        </div>
-                        <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-item wow fadeInUp delay-0-4s">
-                        <div class="number">04.</div>
-                        <div class="content">
-                            <h4>Automatisation & DevOps</h4>
-                            <p>Automatisation des déploiements avec Git, GitHub et Docker pour une mise en production
-                                fluide.</p>
-                        </div>
-                        <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-item wow fadeInUp delay-0-2s">
-                        <div class="number">05.</div>
-                        <div class="content">
-                            <h4>Création d'API RESTful</h4>
-                            <p>Développement d'interfaces robustes pour interconnecter vos services numériques.</p>
-                        </div>
-                        <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-item wow fadeInUp delay-0-4s">
-                        <div class="number">06.</div>
-                        <div class="content">
-                            <h4>Conseil & Stratégie</h4>
-                            <p>Accompagnement stratégique pour renforcer votre crédibilité et générer de vrais
-                                résultats.</p>
-                        </div>
-                        <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
+                @endforelse
+                
             </div>
         </div>
         <div class="bg-lines">
@@ -345,90 +303,19 @@
                     <div class="col-lg-7">
                         <div class="skill-items-wrap">
                             <div class="row">
+                                @forelse ($skills as $skill)
                                 <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
                                     <div class="skill-item wow fadeInUp delay-0-2s">
-                                        <img src="assets/images/skills/skill1.png" alt="Skill">
-                                        <h5>Flutter</h5>
-                                        <span class="percent">90%</span>
+                                        <img src="{{ asset($skill->image) }}" alt="Skill">
+                                        <h5>{{ $skill->name }}</h5>
+                                        <span class="percent">{{ "$skill->proficiency%" }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-2s">
-                                        <img src="assets/images/skills/skill1.png" alt="Skill">
-                                        <h5>Flutter</h5>
-                                        <span class="percent">90%</span>
+                                @empty
+                                    <div class="text-center">
+                                        <span>Aucune compétence disponible</span>
                                     </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-2s">
-                                        <img src="assets/images/skills/skill1.png" alt="Skill">
-                                        <h5>Flutter</h5>
-                                        <span class="percent">90%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-2s">
-                                        <img src="assets/images/skills/skill1.png" alt="Skill">
-                                        <h5>Flutter</h5>
-                                        <span class="percent">90%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-2s">
-                                        <img src="assets/images/skills/skill1.png" alt="Skill">
-                                        <h5>Flutter</h5>
-                                        <span class="percent">90%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-3s">
-                                        <img src="assets/images/skills/skill2.png" alt="Skill">
-                                        <h5>Laravel</h5>
-                                        <span class="percent">95%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-4s">
-                                        <img src="assets/images/skills/skill3.png" alt="Skill">
-                                        <h5>Spring Boot</h5>
-                                        <span class="percent">85%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-5s">
-                                        <img src="assets/images/skills/skill4.png" alt="Skill">
-                                        <h5>React JS</h5>
-                                        <span class="percent">80%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-2s">
-                                        <img src="assets/images/skills/skill5.png" alt="Skill">
-                                        <h5>Figma</h5>
-                                        <span class="percent">85%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-3s">
-                                        <img src="assets/images/skills/skill6.png" alt="Skill">
-                                        <h5>Docker</h5>
-                                        <span class="percent">75%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-4s">
-                                        <img src="assets/images/skills/skill7.png" alt="Skill">
-                                        <h5>PostgreSQL</h5>
-                                        <span class="percent">85%</span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-5s">
-                                        <img src="assets/images/skills/skill8.png" alt="Skill">
-                                        <h5>Git / GitHub</h5>
-                                        <span class="percent">95%</span>
-                                    </div>
-                                </div>
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -457,70 +344,40 @@
                     </div>
                 </div>
             </div>
+            @forelse ($projects as $index => $project)
             <div class="row align-items-center pb-25">
-                <div class="col-lg-6">
+
+                {{-- IMAGE --}}
+                <div class="col-lg-6 {{ $index % 2 == 1 ? 'order-lg-2' : '' }}">
                     <div class="project-image wow fadeInLeft delay-0-2s">
-                        <img src="assets/images/projects/project1.jpg" alt="Project">
+                        <img src="{{ asset($project->image) }}" alt="{{ $project->title }}">
                     </div>
                 </div>
-                <div class="col-xl-5 col-lg-6">
+
+                {{-- CONTENT --}}
+                <div class="col-xl-5 col-lg-6 {{ $index % 2 == 1 ? 'ms-auto' : '' }}">
                     <div class="project-content wow fadeInRight delay-0-2s">
-                        <span class="sub-title">Développement Web</span>
-                        <h2><a href="project-details.html">Projet DRH INP-HB</a></h2>
-                        <p>Finalisation complète du projet de gestion des ressources humaines pour l'Institut
-                            Polytechnique.</p>
-                        <a href="project-details.html" class="details-btn"><i class="far fa-arrow-right"></i></a>
+
+                        <span class="sub-title">
+                            {{ $project->category->name ?? 'Projet' }}
+                        </span>
+
+                        <h2>{{ $project->title }}</h2>
+                        <p>{{ $project->description }}</p>
+
+                        <a href="{{ route('project.detail', $project) }}" class="details-btn">
+                            <i class="far fa-arrow-right"></i>
+                        </a>
+
                     </div>
                 </div>
+
             </div>
-            <div class="row align-items-center pb-25">
-                <div class="col-lg-6 order-lg-2">
-                    <div class="project-image wow fadeInLeft delay-0-2s">
-                        <img src="assets/images/projects/project-psr.png" alt="Project">
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-6 ms-auto">
-                    <div class="project-content wow fadeInRight delay-0-2s">
-                        <span class="sub-title">Back-office Solution</span>
-                        <h2><a href="project-details.html">Plateforme PSR</a></h2>
-                        <p>Réalisation du back-office de la Plateforme Intelligente de suivi de la recherche ivoirienne.
-                        </p>
-                        <a href="project-details.html" class="details-btn"><i class="far fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center pb-25">
-                <div class="col-lg-6">
-                    <div class="project-image wow fadeInLeft delay-0-2s">
-                        <img src="assets/images/projects/project3.jpg" alt="Project">
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-6">
-                    <div class="project-content wow fadeInRight delay-0-2s">
-                        <span class="sub-title">Migration & Laravel</span>
-                        <h2><a href="project-details.html">Concours BAC</a></h2>
-                        <p>Migration reussie de la partie candidat d'un projet de gestion du concours BAC vers Laravel
-                            12.</p>
-                        <a href="project-details.html" class="details-btn"><i class="far fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center pb-25">
-                <div class="col-lg-6 order-lg-2">
-                    <div class="project-image wow fadeInLeft delay-0-2s">
-                        <img src="assets/images/projects/project4.jpg" alt="Project">
-                    </div>
-                </div>
-                <div class="col-xl-5 col-lg-6 ms-auto">
-                    <div class="project-content wow fadeInRight delay-0-2s">
-                        <span class="sub-title">Application Web</span>
-                        <h2><a href="project-details.html">O'Otakus Crêperie</a></h2>
-                        <p>Développement d'une solution numérique complète pour la gestion d'une enseigne de
-                            restauration.</p>
-                        <a href="project-details.html" class="details-btn"><i class="far fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+            @empty
+            <div class="text-center">Aucun projet</div>
+            @endforelse
+
+            
             <div class="project-btn text-center wow fadeInUp delay-0-2s">
                 <a href="projects.html" class="theme-btn">Voir plus de projects <i class="far fa-angle-right"></i></a>
             </div>

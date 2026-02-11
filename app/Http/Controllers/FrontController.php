@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
+use App\Models\Service;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
     public function index()
     {
-        // Home page
+        $data = [
+            "services" => Service::where("deleted", 0)->orderBy('order')->get(),
+            "skills" => Skill::where("deleted", 0)->orderBy('order')->get(),
+            "projects" => Project::where("deleted", 0)->orderBy('order')->get()
+        ];
+        return view("index", $data);
     }
 
     public function about()
