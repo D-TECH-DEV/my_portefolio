@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\Skill;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -14,7 +15,8 @@ class FrontController extends Controller
         $data = [
             "services" => Service::where("deleted", 0)->orderBy('order')->get(),
             "skills" => Skill::where("deleted", 0)->orderBy('order')->get(),
-            "projects" => Project::where("deleted", 0)->orderBy('order')->get()
+            "projects" => Project::where("deleted", 0)->limit(4)->get(),
+            "testimonials" => Testimonial::where("is_active", 1)->get(),
         ];
         return view("index", $data);
     }
@@ -26,12 +28,23 @@ class FrontController extends Controller
 
     public function portfolio()
     {
-        // Portfolio list
+        $data = [
+            "services" => Service::where("deleted", 0)->orderBy('order')->get(),
+            "projects" => Project::getProjetService(),
+        ];
+
+        // dd(Project::getProjetService());
+        return view("projects", $data);
     }
 
-    public function portfolioShow($slug)
+    public function portfolioShow($project)
     {
-        // Project detail
+
+    // dd($project);
+        $data = [
+            "project" => Project::getOneProjetService($project)
+        ];
+        return view("project-details", $data);
     }
 
     public function blog()

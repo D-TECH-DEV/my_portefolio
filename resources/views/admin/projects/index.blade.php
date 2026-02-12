@@ -97,7 +97,7 @@
                     <tr>
                         <th style="width: 80px;">Image</th>
                         <th>Titre</th>
-                        <th>Catégorie</th>
+                        <th>Service</th>
                         <th>Technologies</th>
                         <th>Date</th>
                         <th>Statut</th>
@@ -105,16 +105,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($projects as $project)                   
                     <tr>
                         <td>
-                            <img src="https://via.placeholder.com/60/dca73a/0a1128?text=DRH"
+                            <img src="{{ asset($project->image) }}"
                                 style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;" alt="Project">
                         </td>
                         <td>
-                            <strong style="color: var(--admin-text-heading);">Projet DRH INP-HB</strong><br>
-                            <small style="color: var(--admin-text-base);">Gestion des ressources humaines</small>
+                            <strong style="color: var(--admin-text-heading);">{{ $project->title }}</strong><br>
+                            <small style="color: var(--admin-text-base);">{{ $project->title }}</small>
                         </td>
-                        <td>Développement Web</td>
+                        <td>{{ $project->services }}</td>
                         <td>
                             <span class="badge bg-secondary me-1">Laravel</span>
                             <span class="badge bg-secondary">MySQL</span>
@@ -135,132 +136,7 @@
                             </button>
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>
-                            <img src="https://via.placeholder.com/60/dca73a/0a1128?text=PSR"
-                                style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;" alt="Project">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Plateforme PSR</strong><br>
-                            <small style="color: var(--admin-text-base);">Suivi de la recherche ivoirienne</small>
-                        </td>
-                        <td>Back-office</td>
-                        <td>
-                            <span class="badge bg-secondary me-1">Laravel</span>
-                            <span class="badge bg-secondary me-1">Vue.js</span>
-                            <span class="badge bg-secondary">PostgreSQL</span>
-                        </td>
-                        <td data-sort="2026-01-10">10 Jan 2026</td>
-                        <td><span class="badge-admin-success">Publié</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-admin-secondary me-1" title="Voir">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <a href="{{ url('/admin/projects/edit/2') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="https://via.placeholder.com/60/dca73a/0a1128?text=BAC"
-                                style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;" alt="Project">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">Concours BAC</strong><br>
-                            <small style="color: var(--admin-text-base);">Gestion du concours BAC</small>
-                        </td>
-                        <td>Migration Laravel</td>
-                        <td>
-                            <span class="badge bg-secondary me-1">Laravel 12</span>
-                            <span class="badge bg-secondary">MySQL</span>
-                        </td>
-                        <td data-sort="2026-01-05">05 Jan 2026</td>
-                        <td><span class="badge-admin-warning">Brouillon</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-admin-secondary me-1" title="Voir">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <a href="{{ url('/admin/projects/edit/3') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="https://via.placeholder.com/60/dca73a/0a1128?text=OTA"
-                                style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;" alt="Project">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">O'Otakus Crêperie</strong><br>
-                            <small style="color: var(--admin-text-base);">Solution de gestion restauration</small>
-                        </td>
-                        <td>Application Web</td>
-                        <td>
-                            <span class="badge bg-secondary me-1">Laravel</span>
-                            <span class="badge bg-secondary me-1">Bootstrap</span>
-                            <span class="badge bg-secondary">MySQL</span>
-                        </td>
-                        <td data-sort="2025-12-28">28 Déc 2025</td>
-                        <td><span class="badge-admin-success">Publié</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-admin-secondary me-1" title="Voir">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <a href="{{ url('/admin/projects/edit/4') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="https://via.placeholder.com/60/dca73a/0a1128?text=API"
-                                style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;" alt="Project">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">API E-commerce</strong><br>
-                            <small style="color: var(--admin-text-base);">API RESTful pour plateforme e-commerce</small>
-                        </td>
-                        <td>Backend API</td>
-                        <td>
-                            <span class="badge bg-secondary me-1">Spring Boot</span>
-                            <span class="badge bg-secondary">PostgreSQL</span>
-                        </td>
-                        <td data-sort="2025-12-20">20 Déc 2025</td>
-                        <td><span class="badge-admin-danger">Archivé</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-admin-secondary me-1" title="Voir">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <a href="{{ url('/admin/projects/edit/5') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    @endforeach                    
                 </tbody>
             </table>
         </div>

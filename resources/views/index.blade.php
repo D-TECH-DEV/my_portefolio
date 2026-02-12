@@ -136,9 +136,9 @@
                                 <h6>Mark J. Collins</h6>
                                 <i class="fas fa-arrow-right"></i>
                             </div> -->
-                            <div class="dot-shape">
+                            {{-- <div class="dot-shape">
                                 <img src="assets/images/shape/about-dot.png" alt="Shape">
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -365,7 +365,7 @@
                         <h2>{{ $project->title }}</h2>
                         <p>{{ $project->description }}</p>
 
-                        <a href="{{ route('project.detail', $project) }}" class="details-btn">
+                        <a href="{{ route('project.detail', ["project" =>$project]) }}" class="details-btn">
                             <i class="far fa-arrow-right"></i>
                         </a>
 
@@ -379,7 +379,7 @@
 
             
             <div class="project-btn text-center wow fadeInUp delay-0-2s">
-                <a href="projects.html" class="theme-btn">Voir plus de projects <i class="far fa-angle-right"></i></a>
+                <a href="{{ route('portfolio') }}" class="theme-btn">Voir plus de projects <i class="far fa-angle-right"></i></a>
             </div>
         </div>
         <div class="bg-lines">
@@ -414,50 +414,33 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="testimonials-wrap">
+                            @forelse ($testimonials as $testimonial)                            
                             <div class="testimonial-item wow fadeInUp delay-0-3s">
-                                <div class="author">
-                                    <img src="assets/images/testimonials/author1.png" alt="Author">
+                                @php
+                                    $parts = explode(' ', $testimonial->name);
+                                    $initials = strtoupper(
+                                        substr($parts[0],0,1) .
+                                        (isset($parts[1]) ? substr($parts[1],0,1) : '')
+                                    );
+                                @endphp
+
+                                <div class="text-center">
+                                    <div class="avatar-initial">{{ $initials }}</div>
                                 </div>
-                                <div class="text">At vero eoset accusamus et iusto odio dignissimos ducimus quie
-                                    blanditiis praesentium voluptatum deleniti atque corrupti dolores</div>
+                                <div class="text">{{ $testimonial->message }}</div>
                                 <div class="testi-des">
-                                    <h5>Rodolfo E. Shannon</h5>
-                                    <span>CEO & Founder</span>
+                                    <h5>{{ $testimonial->name }}</h5>
+                                    <span>{{ $testimonial->profession }}</span>
                                 </div>
                             </div>
-                            <div class="testimonial-item wow fadeInUp delay-0-4s">
-                                <div class="author">
-                                    <img src="assets/images/testimonials/author2.png" alt="Author">
-                                </div>
-                                <div class="text">Nam libero tempore cumsoluta nobise est eligendi optio cumque nihil
-                                    impedit quominus idquod maxime placeat facere possimus</div>
-                                <div class="testi-des">
-                                    <h5>Kenneth J. Dutton</h5>
-                                    <span>Web Developer</span>
-                                </div>
+                            @empty
+
+                            <div class="text-center">
+                                <span>Aucun commentaire disponible</span>
                             </div>
-                            <div class="testimonial-item wow fadeInUp delay-0-2s">
-                                <div class="author">
-                                    <img src="assets/images/testimonials/author1.png" alt="Author">
-                                </div>
-                                <div class="text">At vero eoset accusamus et iusto odio dignissimos ducimus quie
-                                    blanditiis praesentium voluptatum deleniti atque corrupti dolores</div>
-                                <div class="testi-des">
-                                    <h5>Rodolfo E. Shannon</h5>
-                                    <span>CEO & Founder</span>
-                                </div>
-                            </div>
-                            <div class="testimonial-item wow fadeInUp delay-0-2s">
-                                <div class="author">
-                                    <img src="assets/images/testimonials/author2.png" alt="Author">
-                                </div>
-                                <div class="text">Nam libero tempore cumsoluta nobise est eligendi optio cumque nihil
-                                    impedit quominus idquod maxime placeat facere possimus</div>
-                                <div class="testi-des">
-                                    <h5>Kenneth J. Dutton</h5>
-                                    <span>Web Developer</span>
-                                </div>
-                            </div>
+                                
+                            @endforelse
+                            
                         </div>
                     </div>
                 </div>
@@ -574,7 +557,7 @@
 
 
     <!-- Blog Area start -->
-    <section class="blog-area rel z-1" id="blog">
+    {{-- <section class="blog-area rel z-1" id="blog">
         <div class="for-bgc-black pt-130 pb-100 rpt-100 rpb-70">
             <div class="container">
                 <div class="row justify-content-center">
@@ -635,11 +618,11 @@
             <span></span><span></span>
             <span></span><span></span>
         </div>
-    </section>
+    </section> --}}
     <!-- Blog Area end -->
 
     <!-- Client Log start -->
-    <div class="client-logo-area rel z-1 pt-130 rpt-100 pb-60">
+    {{-- <div class="client-logo-area rel z-1 pt-130 rpt-100 pb-60">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-12">
@@ -689,7 +672,7 @@
             <span></span><span></span>
             <span></span><span></span>
         </div>
-    </div>
+    </div> --}}
     <!-- Client Log end -->
 
 @endsection

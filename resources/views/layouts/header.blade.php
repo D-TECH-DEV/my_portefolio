@@ -6,7 +6,7 @@
 
                 <div class="header-inner rel d-flex align-items-center">
                     <div class="logo-outer">
-                        <div class="logo"><a href="index.html"><img src="{{ asset('assets/images/logos/logo.png') }}" alt="Logo"
+                        <div class="logo"><a href="{{ route("index") }}"><img src="{{ asset('assets/images/logos/logo.png') }}" alt="Logo"
                                     title="Logo"></a></div>
                     </div>
 
@@ -16,7 +16,7 @@
                             <div class="navbar-header">
                                 <div class="mobile-logo my-15">
                                     <a href="index.html">
-                                        <img src="{{ asset('assets/images/logos/logo.png') }}" alt="Logo" title="Logo">
+                                        <img src="{{ asset('assets/images/logos/logo.png') }}" class="img-fluid" alt="Logo" title="Logo">
                                     </a>
                                 </div>
 

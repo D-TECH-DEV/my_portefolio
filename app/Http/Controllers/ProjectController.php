@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
@@ -10,12 +10,21 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        //
+
+    $data = [
+        "projects" => Project::getProjetService()
+    ];
+
+    // dd(Project::getProjetService());
+        return view("admin.projects.index", $data);
     }
 
     public function create()
     {
-        //
+        $data = [
+            
+        ];
+        return view("admin.projects.create", $data);
     }
 
     public function store(Request $request)

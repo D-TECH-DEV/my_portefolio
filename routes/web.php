@@ -5,13 +5,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\ProjectController;
 
 Route::get('/', [FrontController::class, "index"])->name("index");
-Route::get("/blog-details", function () {
-    return view("blog-details");
-})->name("blog.detail");
+Route::post("/blog-details", [FrontController::class, "portfolioShow"])->name("blog.detail");
 
-Route::get('/detail-projet/{project}', [SkillController::class, "detail"])->name("project.detail");
+Route::get('/mes-projet', [FrontController::class, "portfolio"])->name("portfolio");
+
+
+Route::get('/detail-projet/{project}', [FrontController::class, "portfolioShow"])->name("project.detail");
 
 Route::prefix("/admin")->group(function () {
     Route::get('/', function () {
@@ -22,13 +24,9 @@ Route::prefix("/admin")->group(function () {
         return view('admin.profile.index');
     })->name("admin.profile");
 
-    Route::get('/projects', function () {
-        return view('admin.projects.index');
-    })->name("admin.projects");
-
-    Route::get('/projects/create', function () {
-        return view('admin.projects.create');
-    })->name("admin.projects.create");
+    // Les projets 
+    Route::get('/projects', [ProjectController::class, 'index'])->name("admin.projects");
+    Route::get('/projects/create', [ProjectController::class, "create"])->name("admin.projects.create");
 
     // le skills 
     Route::get('/competences', [SkillController::class, "index"])->name("admin.skills");

@@ -14,3 +14,19 @@
     <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css')}}">
     <!-- Main Style -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
+
+    <style>
+      .avatar-initial {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#14053f,#fdf90d);
+    color: #14053f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+    </style>

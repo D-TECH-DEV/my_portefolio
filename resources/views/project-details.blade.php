@@ -46,7 +46,7 @@
         <section class="page-banner-area pt-200 rpt-140 pb-100 rpb-60 rel z-1 text-center">
             <div class="container">
                 <div class="banner-inner text-white">
-                    <h1 class="page-title wow fadeInUp delay-0-2s">Mobile Application Design</h1>
+                    <h1 class="page-title wow fadeInUp delay-0-2s">{{ $project->title }}</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center wow fadeInUp delay-0-4s">
                             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -70,7 +70,7 @@
         <section class="projects-details-area pt-40 pb-130 rpb-100 rel z-1">
             <div class="container">
                 <div class="projects-details-image mb-50 wow fadeInUp delay-0-2s">
-                    <img src="assets/images/projects/project-details.jpg" alt="Project Details">
+                    <img src="{{ asset($project->image) }}" alt="Project Details">
                 </div>
                 <div class="row gap-120">
                     <div class="col-lg-8">

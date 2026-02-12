@@ -9,6 +9,8 @@ class Service extends Model
 {
     use HasFactory;
 
+    public $table = "services"; 
+
     protected $fillable = [
         'title',
         'description',
@@ -16,4 +18,9 @@ class Service extends Model
         'order',
         'deleted'
     ];
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'projects_has_services');
+    }
 }

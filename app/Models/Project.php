@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'category_id',
@@ -34,9 +33,28 @@ class Project extends Model
         'start_date' => 'date',
         'completion_date' => 'date',
     ];
+    
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
+    // public function services()
+    // {
+    //     return $this->belongsToMany(Service::class, 'project_service');
+    // }
+
+
+    public static function getProjetService() {
+        return static::query()->select("p.*", "s.title as sevices", "s.tag as service_tag")
+            ->from("projects as p")
+            ->leftjoin("services_projects as sp", "sp.projects_id", "=", "p.id")
+            ->leftjoin("services as s", "s.id", "=", "sp.services_id")
+            ->get();
+    }
+
+    public static function getOneProjetService($id) {
+        return static::query()->select("p.*", "s.title as sevices", "s.tag as service_tag")
+            ->from("projects as p")
+            ->leftjoin("services_projects as sp", "sp.projects_id", "=", "p.id")
+            ->leftjoin("services as s", "s.id", "=", "sp.services_id")
+            ->where("p.id", $id)
+            ->first();
     }
 }
