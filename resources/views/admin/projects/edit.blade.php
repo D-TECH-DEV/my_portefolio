@@ -239,8 +239,8 @@
                             </option>
                             <option value="published" {{ old('status', $project->status) == 'published' ? 'selected' : '' }}>
                                 Publié</option>
-                            <option value="archived" {{ old('status', $project->status) == 'archived' ? 'selected' : '' }}>
-                                Archivé</option>
+                            {{-- <option value="draft" {{ old('status', $project->status) == 'archived' ? 'selected' : '' }}>
+                                Archivé</option> --}}
                         </select>
                     </div>
 

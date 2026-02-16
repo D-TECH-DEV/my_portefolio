@@ -223,7 +223,7 @@
                         <select name="status" class="form-select admin-form-control">
                             <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Brouillon</option>
                             <option value="published" {{ old('status') == 'published' ? 'selected' : '' }}>Publié</option>
-                            <option value="archived" {{ old('status') == 'archived' ? 'selected' : '' }}>Archivé</option>
+                            {{-- <option value="archived" {{ old('status') == 'archived' ? 'selected' : '' }}>Archivé</option> --}}
                         </select>
                     </div>
 

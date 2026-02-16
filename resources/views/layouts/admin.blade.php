@@ -110,7 +110,10 @@
             margin: 5px 15px;
         }
 
-        .admin-nav-link {{ request()->routeIs('admin') ? 'active' : '' }} {
+        .admin-nav-link
+
+        {{ request()->routeIs('admin') ? 'active' : '' }}
+            {
             display: flex;
             align-items: center;
             padding: 12px 15px;
@@ -121,7 +124,10 @@
             font-size: 15px;
         }
 
-        .admin-nav-link {{ request()->routeIs('admin') ? 'active' : '' }} i {
+        .admin-nav-link
+
+        {{ request()->routeIs('admin') ? 'active' : '' }}
+        i {
             font-size: 18px;
             margin-right: 12px;
             width: 20px;
@@ -555,6 +561,14 @@
                     class="admin-nav-link {{ request()->routeIs('admin.messages*') ? 'active' : '' }} ">
                     <i class="bi bi-envelope"></i>
                     <span>Messages</span>
+                </a>
+            </div>
+
+            <div class="admin-nav-item">
+                <a href="{{ route('admin.testimonials') }}"
+                    class="admin-nav-link {{ request()->routeIs('admin.testimonials*') ? 'active' : '' }} ">
+                    <i class="bi bi-chat-quote"></i>
+                    <span>Témoignages</span>
                 </a>
             </div>
 

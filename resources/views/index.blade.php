@@ -1,4 +1,3 @@
-
 @extends("layouts.master")
 @section("content")
 
@@ -52,7 +51,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-sm-12">
                     <div class="hero-content rmb-55 wow fadeInUp delay-0-2s">
-                        <span class=""><h4>Salut, je suis</h4> </span>
+                        <span class="">
+                            <h4>Salut, je suis</h4>
+                        </span>
                         <h2 class="text-warning"><b>D. Youssouf Doumdje</b></h2>
                         <h3>développeur full-stack</h3>
                         <p>Fondateur de You-Soft, je conçois des solutions digitales innovantes et performantes.
@@ -127,15 +128,15 @@
                         <div class="about-image-part wow fadeInUp delay-0-3s">
                             <img src="assets/images/about/about.png" alt="About Me">
                             <!-- <div class="about-btn btn-one wow fadeInRight delay-0-4s">
-                                <img src="assets/images/about/btn-image1.png" alt="Image">
-                                <h6>Experience Designer</h6>
-                                <i class="fas fa-arrow-right"></i>
-                            </div> -->
+                                        <img src="assets/images/about/btn-image1.png" alt="Image">
+                                        <h6>Experience Designer</h6>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div> -->
                             <!-- <div class="about-btn btn-two wow fadeInRight delay-0-5s">
-                                <img src="assets/images/about/btn-image2.png" alt="Image">
-                                <h6>Mark J. Collins</h6>
-                                <i class="fas fa-arrow-right"></i>
-                            </div> -->
+                                        <img src="assets/images/about/btn-image2.png" alt="Image">
+                                        <h6>Mark J. Collins</h6>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div> -->
                             {{-- <div class="dot-shape">
                                 <img src="assets/images/shape/about-dot.png" alt="Shape">
                             </div> --}}
@@ -160,10 +161,10 @@
         <div class="container">
             <div class="row">
                 <!-- <div class="col-lg-3">
-                    <div class="big-icon mt-85 rmt-0 rmb-55 wow fadeInUp delay-0-2s">
-                        <img src="assets/images/logos/logo3.png" alt="">
-                    </div>
-                </div> -->
+                            <div class="big-icon mt-85 rmt-0 rmb-55 wow fadeInUp delay-0-2s">
+                                <img src="assets/images/logos/logo3.png" alt="">
+                            </div>
+                        </div> -->
                 <div class="col-lg-12">
                     <div class="row ">
                         <div class="col-xl-8 col-lg-9">
@@ -252,25 +253,25 @@
             </div>
             <div class="row">
                 @forelse ($services as $service)
-                    
-                
-                <div class="col-lg-6">
-                    <div class="service-item wow fadeInUp delay-0-2s">
-                        <div class="number">{{ "$service->order." }}</div>
-                        <div class="content">
-                            <h4>{{ $service->title }}</h4>
-                            <p>{{ $service->description }}</p>
+
+
+                    <div class="col-lg-6">
+                        <div class="service-item wow fadeInUp delay-0-2s">
+                            <div class="number">{{ "$service->order." }}</div>
+                            <div class="content">
+                                <h4>{{ $service->title }}</h4>
+                                <p>{{ $service->description }}</p>
+                            </div>
+                            {{-- <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a> --}}
                         </div>
-                        {{-- <a href="#" class="details-btn"><i class="fas fa-arrow-right"></i></a> --}}
                     </div>
-                </div>
 
                 @empty
                     <div class="text-center">
                         <span>Aucun service disponible</span>
                     </div>
                 @endforelse
-                
+
             </div>
         </div>
         <div class="bg-lines">
@@ -304,13 +305,13 @@
                         <div class="skill-items-wrap">
                             <div class="row">
                                 @forelse ($skills as $skill)
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
-                                    <div class="skill-item wow fadeInUp delay-0-2s">
-                                        <img src="{{ asset($skill->image) }}" alt="Skill">
-                                        <h5>{{ $skill->name }}</h5>
-                                        <span class="percent">{{ "$skill->proficiency%" }}</span>
+                                    <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 col-6">
+                                        <div class="skill-item wow fadeInUp delay-0-2s">
+                                            <img src="{{ asset($skill->image) }}" alt="Skill">
+                                            <h5>{{ $skill->name }}</h5>
+                                            <span class="percent">{{ "$skill->proficiency%" }}</span>
+                                        </div>
                                     </div>
-                                </div>
                                 @empty
                                     <div class="text-center">
                                         <span>Aucune compétence disponible</span>
@@ -345,41 +346,42 @@
                 </div>
             </div>
             @forelse ($projects as $index => $project)
-            <div class="row align-items-center pb-25">
+                <div class="row align-items-center pb-25">
 
-                {{-- IMAGE --}}
-                <div class="col-lg-6 {{ $index % 2 == 1 ? 'order-lg-2' : '' }}">
-                    <div class="project-image wow fadeInLeft delay-0-2s">
-                        <img src="{{ asset($project->image) }}" alt="{{ $project->title }}">
+                    {{-- IMAGE --}}
+                    <div class="col-lg-6 {{ $index % 2 == 1 ? 'order-lg-2' : '' }}">
+                        <div class="project-image wow fadeInLeft delay-0-2s">
+                            <img src="{{ asset($project->image) }}" alt="{{ $project->title }}">
+                        </div>
                     </div>
-                </div>
 
-                {{-- CONTENT --}}
-                <div class="col-xl-5 col-lg-6 {{ $index % 2 == 1 ? 'ms-auto' : '' }}">
-                    <div class="project-content wow fadeInRight delay-0-2s">
+                    {{-- CONTENT --}}
+                    <div class="col-xl-5 col-lg-6 {{ $index % 2 == 1 ? 'ms-auto' : '' }}">
+                        <div class="project-content wow fadeInRight delay-0-2s">
 
-                        <span class="sub-title">
-                            {{ $project->category->name ?? 'Projet' }}
-                        </span>
+                            <span class="sub-title">
+                                {{ $project->category->name ?? 'Projet' }}
+                            </span>
 
-                        <h2>{{ $project->title }}</h2>
-                        <p>{{ $project->description }}</p>
+                            <h2>{{ $project->title }}</h2>
+                            <p>{{ $project->description }}</p>
 
-                        <a href="{{ route('project.detail', ["project" =>$project]) }}" class="details-btn">
-                            <i class="far fa-arrow-right"></i>
-                        </a>
+                            <a href="{{ route('project.detail', ["project" => $project]) }}" class="details-btn">
+                                <i class="far fa-arrow-right"></i>
+                            </a>
 
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
             @empty
-            <div class="text-center">Aucun projet</div>
+                <div class="text-center">Aucun projet</div>
             @endforelse
 
-            
+
             <div class="project-btn text-center wow fadeInUp delay-0-2s">
-                <a href="{{ route('portfolio') }}" class="theme-btn">Voir plus de projects <i class="far fa-angle-right"></i></a>
+                <a href="{{ route('portfolio') }}" class="theme-btn">Voir plus de projects <i
+                        class="far fa-angle-right"></i></a>
             </div>
         </div>
         <div class="bg-lines">
@@ -414,33 +416,33 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="testimonials-wrap">
-                            @forelse ($testimonials as $testimonial)                            
-                            <div class="testimonial-item wow fadeInUp delay-0-3s">
-                                @php
-                                    $parts = explode(' ', $testimonial->name);
-                                    $initials = strtoupper(
-                                        substr($parts[0],0,1) .
-                                        (isset($parts[1]) ? substr($parts[1],0,1) : '')
-                                    );
-                                @endphp
+                            @forelse ($testimonials as $testimonial)
+                                <div class="testimonial-item wow fadeInUp delay-0-3s">
+                                    @php
+                                        $parts = explode(' ', $testimonial->name);
+                                        $initials = strtoupper(
+                                            substr($parts[0], 0, 1) .
+                                            (isset($parts[1]) ? substr($parts[1], 0, 1) : '')
+                                        );
+                                    @endphp
 
-                                <div class="text-center">
-                                    <div class="avatar-initial">{{ $initials }}</div>
+                                    <div class="text-center">
+                                        <div class="avatar-initial">{{ $initials }}</div>
+                                    </div>
+                                    <div class="text">{{ $testimonial->message }}</div>
+                                    <div class="testi-des">
+                                        <h5>{{ $testimonial->name }}</h5>
+                                        <span>{{ $testimonial->profession }}</span>
+                                    </div>
                                 </div>
-                                <div class="text">{{ $testimonial->message }}</div>
-                                <div class="testi-des">
-                                    <h5>{{ $testimonial->name }}</h5>
-                                    <span>{{ $testimonial->profession }}</span>
-                                </div>
-                            </div>
                             @empty
 
-                            <div class="text-center">
-                                <span>Aucun commentaire disponible</span>
-                            </div>
-                                
+                                <div class="text-center">
+                                    <span>Aucun commentaire disponible</span>
+                                </div>
+
                             @endforelse
-                            
+
                         </div>
                     </div>
                 </div>
@@ -457,7 +459,7 @@
     <!-- Testimonial Area end -->
 
 
-   
+
 
     <!-- Contact Area start -->
     <section class="contact-area pt-95 pb-130 rpt-70 rpb-100 rel z-1" id="contact">
@@ -481,15 +483,22 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="contact-form contact-form-wrap form-style-one wow fadeInUp delay-0-4s">
-                        <form id="contactForm" class="contactForm" name="contactForm"
-                            action="https://noxfolio.starplatethemes.com/assets/php/form-process.php" method="post">
+                        <div id="contactErrors" class="alert alert-danger d-none alert-dismissible fade show" role="alert"
+                            style="background: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.2); color: #dc3545;">
+                            <ul class="mb-0" id="errorList"></ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                                style="filter: invert(1);"></button>
+                        </div>
+
+                        <form id="contactFormLaravel" class="contactForm" name="contactFormLaravel"
+                            action="{{ route('contact.store') }}" method="post">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Nom complet</label>
                                         <input type="text" id="name" name="name" class="form-control" value=""
-                                            placeholder="Ex: Jean Dupont" required
-                                            data-error="Veuillez entrer votre nom">
+                                            placeholder="Ex: Jean Dupont" required data-error="Veuillez entrer votre nom">
                                         <label for="name" class="for-icon"><i class="far fa-user"></i></label>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -675,4 +684,74 @@
     </div> --}}
     <!-- Client Log end -->
 
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background: #1a1a1a; border: 1px solid #333; color: #fff;">
+                <div class="modal-body text-center p-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    <h3 class="mb-3">Message Envoyé !</h3>
+                    <p class="text-muted mb-4" id="successMessage">Votre message a été transmis avec succès. Je vous répondrai dans les plus brefs délais.</p>
+                    <button type="button" class="theme-btn" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+@push("js")
+<script>
+$(document).ready(function() {
+    $('#contactFormLaravel').on('submit', function(e) {
+        e.preventDefault();
+        
+        let form = $(this);
+        let submitBtn = form.find('button[type="submit"]');
+        let originalBtnText = submitBtn.html();
+        
+        // Disable button and show loading
+        submitBtn.prop('disabled', true).html('Envoi en cours... <i class="fas fa-spinner fa-spin ms-2"></i>');
+        
+        // Clear previous errors
+        $('#contactErrors').addClass('d-none');
+        $('#errorList').empty();
+
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            data: form.serialize(),
+            success: function(response) {
+                if(response.success) {
+                    // Show success modal
+                    $('#successMessage').text(response.message);
+                    let successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
+                    
+                    // Reset form
+                    form[0].reset();
+                }
+            },
+            error: function(xhr) {
+                if(xhr.status === 422) {
+                    // Handle validation errors
+                    let errors = xhr.responseJSON.errors;
+                    $('#contactErrors').removeClass('d-none');
+                    $.each(errors, function(key, value) {
+                        $('#errorList').append('<li>' + value[0] + '</li>');
+                    });
+                } else {
+                    alert("Une erreur est survenue lors de l'envoi du message. Veuillez réessayer.");
+                }
+            },
+            complete: function() {
+                // Restore button state
+                submitBtn.prop('disabled', false).html(originalBtnText);
+            }
+        });
+    });
+});
+</script>
+@endpush

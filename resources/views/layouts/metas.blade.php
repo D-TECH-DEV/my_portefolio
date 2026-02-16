@@ -8,3 +8,4 @@
 <!-- Title -->
 <title>You-Soft | Développeur Full-Stack</title>
 <!-- Favicon Icon -->
+    <link rel="shortcut icon" href="{{ asset("assets/images/favicon.png") }}">

@@ -6,11 +6,17 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TestimonialController;
 
 Route::get('/', [FrontController::class, "index"])->name("index");
 Route::post("/blog-details", [FrontController::class, "portfolioShow"])->name("blog.detail");
+Route::post("/contact", [\App\Http\Controllers\ContactController::class, "store"])->name("contact.store");
 
-Route::get('/mes-projet', [FrontController::class, "portfolio"])->name("portfolio");
+Route::get('/avis', [TestimonialController::class, "create"])->name("avis");
+Route::post('/avis', [TestimonialController::class, "store"])->name("avis.store");
+
+Route::get('/you-soft-projet', [FrontController::class, "portfolio"])->name("portfolio");
 
 
 Route::get('/detail-projet/{project}', [FrontController::class, "portfolioShow"])->name("project.detail");
@@ -75,9 +81,14 @@ Route::prefix("/admin")->group(function () {
         return view('admin.blogs.edit');
     })->name("admin.blog.edit");
 
-    Route::get('/messages', function () {
-        return view('admin.messages.index');
-    })->name("admin.messages");
+    Route::get('/messages', [MessageController::class, 'index'])->name("admin.messages");
+    Route::get('/messages/{message}', [MessageController::class, 'show'])->name("admin.messages.show");
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name("admin.messages.destroy");
+
+    // Témoignages
+    Route::get('/testimonials', [TestimonialController::class, 'index'])->name("admin.testimonials");
+    Route::post('/testimonials/{testimonial}/toggle', [TestimonialController::class, 'toggleStatus'])->name("admin.testimonials.toggle");
+    Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name("admin.testimonials.destroy");
 
     Route::get('/settings', function () {
         return view('admin.settings.index');

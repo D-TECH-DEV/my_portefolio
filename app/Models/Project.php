@@ -51,6 +51,17 @@ class Project extends Model
             ->get();
     }
 
+    public static function getFrontProjetService() {
+        return static::query()
+            ->select("p.*", "s.title as sevices", "s.tag as service_tag", "c.name as categorie")
+            ->from("projects as p")
+            ->leftjoin("services_projects as sp", "sp.projects_id", "=", "p.id")
+            ->leftjoin("services as s", "s.id", "=", "sp.services_id")
+            ->leftjoin("categories as c", "c.id", "=", "p.category_id")
+            ->where("p.status", "published")
+            ->get();
+    }
+
     public static function getOneProjetService($id)
     {
         $project = \DB::table('projects as p')
