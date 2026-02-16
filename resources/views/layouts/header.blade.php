@@ -38,11 +38,11 @@
                                         </ul>
                                     </li> -->
                                      <li><a href="{{ route("index") }}">Accueil</a></li>
-                                    <li><a href="#about">À propos</a></li>
-                                    <li><a href="#services">Services</a></li>
-                                    <li><a href="#skills">Compétences</a></li>
-                                    <li><a href="#projets">Projets</a></li>
-                                    <li><a href="#blog">Blog</a></li>
+                                    <li><a href="{{ route("index") }}#about">À propos</a></li>
+                                    <li><a href="{{ route("index") }}#services">Services</a></li>
+                                    <li><a href="{{ route("index") }}#skills">Compétences</a></li>
+                                    <li><a href="{{ route("index") }}#projets">Projets</a></li>
+                                    {{-- <li><a href="{{ route("index") }}#blog">Blog</a></li> --}}
                                     <!-- <li class="dropdown"><a href="#">Projets</a>
                                         <ul>
                                             <li><a href="projects.html">Grille de projets</a></li>

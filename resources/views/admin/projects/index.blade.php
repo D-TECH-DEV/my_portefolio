@@ -98,45 +98,62 @@
                         <th style="width: 80px;">Image</th>
                         <th>Titre</th>
                         <th>Service</th>
-                        <th>Technologies</th>
+                        <th>Catégaries</th>
                         <th>Date</th>
                         <th>Statut</th>
                         <th style="width: 150px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($projects as $project)                   
-                    <tr>
-                        <td>
-                            <img src="{{ asset($project->image) }}"
-                                style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;" alt="Project">
-                        </td>
-                        <td>
-                            <strong style="color: var(--admin-text-heading);">{{ $project->title }}</strong><br>
-                            <small style="color: var(--admin-text-base);">{{ $project->title }}</small>
-                        </td>
-                        <td>{{ $project->services }}</td>
-                        <td>
-                            <span class="badge bg-secondary me-1">Laravel</span>
-                            <span class="badge bg-secondary">MySQL</span>
-                        </td>
-                        <td data-sort="2026-01-15">15 Jan 2026</td>
-                        <td><span class="badge-admin-success">Publié</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-admin-secondary me-1" title="Voir">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <a href="{{ url('/admin/projects/edit/1') }}" class="btn btn-sm btn-admin-secondary me-1"
-                                title="Modifier">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger" title="Supprimer" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach                    
+                    @foreach ($projects as $project)
+                        <tr>
+                            <td>
+                                <img src="{{ asset($project->image) }}"
+                                    style="width: 60px; height: 60px; border-radius: 10px; object-fit: cover;" alt="Project">
+                            </td>
+                            <td>
+                                <strong style="color: var(--admin-text-heading);">{{ $project->title }}</strong><br>
+                                <small
+                                    style="color: var(--admin-text-base);">{{ Str::limit($project->description, 50) }}</small>
+                            </td>
+                            <td>{{ $project->sevices }}</td>
+                            <td>
+                                @if(isset($project->categorie))
+                                    <span class="badge bg-secondary me-1">{{ $project->categorie }}</span>
+                                @endif
+                            </td>
+                            <td>{{ $project->completion_date ? $project->completion_date->format('d M Y') : 'N/A' }}</td>
+                            <td>
+                                @if($project->status == 'published')
+                                    <span class="badge-admin-success">Publié</span>
+                                @elseif($project->status == 'draft')
+                                    <span class="badge bg-warning text-dark">Brouillon</span>
+                                @else
+                                    <span class="badge bg-secondary">Archivé</span>
+                                @endif
+                            </td>
+                            <td class="text-nowrap">
+                                <a href="{{ route('project.detail', $project->id) }}"
+                                    class="btn btn-xs btn-admin-secondary me-1 px-2 py-1"
+                                    title="Voir" target="_blank">
+                                    <i class="bi bi-eye small"></i>
+                                </a>
+
+                                <a href="{{ route('admin.projects.edit', $project->id) }}"
+                                    class="btn btn-xs btn-admin-secondary me-1 px-2 py-1"
+                                    title="Modifier">
+                                    <i class="bi bi-pencil small"></i>
+                                </a>
+
+                                <button class="btn btn-xs btn-danger px-2 py-1"
+                                    title="Supprimer"
+                                    onclick="confirmDelete('{{ route('admin.projects.destroy', $project->id) }}')">
+                                    <i class="bi bi-trash small"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -147,17 +164,21 @@
         <div class="modal-dialog">
             <div class="modal-content"
                 style="background: var(--admin-bg-secondary); border: 1px solid var(--admin-border);">
-                <div class="modal-header" style="border-bottom: 1px solid var(--admin-border);">
-                    <h5 class="modal-title" style="color: var(--admin-text-heading);">Confirmer la suppression</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
-                </div>
-                <div class="modal-body" style="color: var(--admin-text-base);">
-                    Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.
-                </div>
-                <div class="modal-footer" style="border-top: 1px solid var(--admin-border);">
-                    <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-danger">Supprimer</button>
-                </div>
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-header" style="border-bottom: 1px solid var(--admin-border);">
+                        <h5 class="modal-title" style="color: var(--admin-text-heading);">Confirmer la suppression</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+                    </div>
+                    <div class="modal-body" style="color: var(--admin-text-base);">
+                        Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.
+                    </div>
+                    <div class="modal-footer" style="border-top: 1px solid var(--admin-border);">
+                        <button type="button" class="btn btn-admin-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -172,6 +193,12 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
     <script>
+        function confirmDelete(url) {
+            $('#deleteForm').attr('action', url);
+            var myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            myModal.show();
+        }
+
         $(document).ready(function () {
             $('#projectsTable').DataTable({
                 responsive: true,

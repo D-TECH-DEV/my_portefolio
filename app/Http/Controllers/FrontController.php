@@ -44,6 +44,8 @@ class FrontController extends Controller
         $data = [
             "project" => Project::getOneProjetService($project)
         ];
+
+        // dd(Project::getOneProjetService($project));
         return view("project-details", $data);
     }
 

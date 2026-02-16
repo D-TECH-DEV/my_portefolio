@@ -49,7 +49,7 @@
                     <h1 class="page-title wow fadeInUp delay-0-2s">{{ $project->title }}</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center wow fadeInUp delay-0-4s">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('index') }}">Accueil</a></li>
                             <li class="breadcrumb-item active">Mobile Application Design</li>
                         </ol>
                     </nav>
@@ -75,34 +75,33 @@
                 <div class="row gap-120">
                     <div class="col-lg-8">
                         <div class="project-details-content wow fadeInUp delay-0-2s">
-                            <h3>We Create digital Product For Business</h3>
-                            <p class="big-letter">sSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque seeney laudantium totam rem aperiam eaque ipsa quae abillo inventore veritatis</p>
-                            <p>Beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aufugit sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam estqui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid consequature</p>
+                            <h4 class="mb-4">{{ $project->description }}</h4>
+                            <h3 class="big-letter">dDétail</h3>
+                            <p>{{ $project->content }}</p>
+
+                            <h3 class="big-letter">tTechnologies</h3>
+
                             <ul class="list-style-one two-column mt-50 mb-40">
-                                <li>Branding & Design</li>
-                                <li>Digital Marketing</li>
-                                <li>Web Development</li>
-                                <li>Product Design</li>
-                                <li>Mobile Apps Design</li>
-                                <li>System & Guide</li>
-                                <li>Graphics Design</li>
-                                <li>Content Management</li>
+                                @foreach ($project->skills as $skill)
+                                    <li>{{ $skill }}</li>
+                                @endforeach
                             </ul>
+
                         </div>
                     </div>
                     <div class="col-lg-4 wow fadeInUp delay-0-4s">
                         <div class="project-details-info rmb-55" style="background-image: url(assets/images/projects/project-info-bg.png);">
                             <div class="pd-info-item">
-                                <span>Category</span>
-                                <h5>Product Design</h5>
+                                <span>Categorie</span>
+                                <h5>{{ $project->categorie }}</h5>
                             </div>
                             <div class="pd-info-item">
-                                <span>Clients</span>
-                                <h5>X_Design Studio</h5>
+                                <span>Clients/Entreprises</span>
+                                <h5>{{ $project->client }}</h5>
                             </div>
                             <div class="pd-info-item">
-                                <span>Location</span>
-                                <h5>Melbourne, Australia</h5>
+                                <span>Lien</span>
+                                <h5>{{ $project->link ?? 'Accès privé' }}</h5>
                             </div>
                             <div class="pd-info-item">
                                 <span>Published</span>
@@ -111,28 +110,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pb-15">
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="image mb-30 wow fadeInUp delay-0-2s">
-                            <img src="assets/images/projects/project-middle1.jpg" alt="Project Middle">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="image mb-30 wow fadeInUp delay-0-4s">
-                            <img src="assets/images/projects/project-middle2.jpg" alt="Project Middle">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <div class="image mb-30 wow fadeInUp delay-0-6s">
-                            <img src="assets/images/projects/project-middle3.jpg" alt="Project Middle">
-                        </div>
-                    </div>
-                </div>
-                <div class="project-bottom-content mb-50 wow fadeInUp delay-0-2s">
-                    <h3 class="title mb-25">Project Summery</h3>
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
-                </div>
-                <div class="tag-share py-30 wow fadeInUp delay-0-2s">
+               
+               
+                {{-- <div class="tag-share py-30 wow fadeInUp delay-0-2s">
                     <div class="item">
                         <b>Tags</b>
                         <div class="tag-coulds">
@@ -150,7 +130,7 @@
                             <a href="#"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="bg-lines">
                <span></span><span></span>

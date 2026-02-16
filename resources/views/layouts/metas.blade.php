@@ -6,5 +6,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Title -->
-<title>You-Soft - Dinguemnodji Youssouf Doumdje | Développeur Full-Stack</title>
+<title>You-Soft | Développeur Full-Stack</title>
 <!-- Favicon Icon -->

@@ -73,7 +73,9 @@
         </div>
     </div>
 
-    <form>
+    <form method="POST" action="{{ route("admin.projects.update", $project->id) }}" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
         <div class="row">
             <!-- Main Form -->
             <div class="col-lg-8">
@@ -83,59 +85,105 @@
                     <!-- Title -->
                     <div class="mb-4">
                         <label class="admin-form-label">Titre du Projet *</label>
-                        <input type="text" class="form-control admin-form-control" value="Projet DRH INP-HB" required>
+                        <input type="text" name="title"
+                            class="form-control admin-form-control @error('title') is-invalid @enderror"
+                            value="{{ old('title', $project->title) }}" placeholder="Ex: Projet DRH INP-HB" required>
+                        @error('title')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Category -->
                     <div class="mb-4">
                         <label class="admin-form-label">Catégorie *</label>
-                        <select class="form-select admin-form-control" required>
+                        <select name="category_id"
+                            class="form-select admin-form-control @error('category_id') is-invalid @enderror" required>
                             <option value="">Sélectionner une catégorie</option>
-                            <option selected>Développement Web</option>
-                            <option>Application Mobile</option>
-                            <option>Back-office Solution</option>
-                            <option>Migration & Laravel</option>
-                            <option>Backend API</option>
-                            <option>Design & UI/UX</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $project->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            @endforeach
                         </select>
+                        @error('category_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Services (Many to Many) -->
+                    <div class="mb-4">
+                        <label class="admin-form-label">Services Associés</label>
+                        <div class="row">
+                            @foreach($services as $service)
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="services[]"
+                                            value="{{ $service->id }}" id="service_{{ $service->id }}" {{ in_array($service->id, old('services', $projectServices)) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="service_{{ $service->id }}"
+                                            style="color: var(--admin-text-base);">
+                                            {{ $service->title }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Skills (Many to Many) -->
+                    <div class="mb-4">
+                        <label class="admin-form-label">Skills Associés</label>
+                        <div class="row">
+                            @foreach($skills as $skill)
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="skills[]"
+                                            value="{{ $skill->id }}" id="skill_{{ $skill->id }}" {{ in_array($skill->id, old('skills', $projectSkills)) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="skill_{{ $skill->id }}"
+                                            style="color: var(--admin-text-base);">
+                                            {{ $skill->name }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
                     <!-- Description -->
                     <div class="mb-4">
                         <label class="admin-form-label">Description *</label>
-                        <textarea class="form-control admin-form-control" rows="6"
-                            required>Finalisation complète du projet de gestion des ressources humaines pour l'Institut Polytechnique. Ce système permet la gestion complète du personnel, des congés, des formations et des évaluations.</textarea>
+                        <textarea name="description"
+                            class="form-control admin-form-control @error('description') is-invalid @enderror" rows="6"
+                            placeholder="Décrivez votre projet en détail..."
+                            required>{{ old('description', $project->description) }}</textarea>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         <small style="color: var(--admin-text-base);">
                             <i class="bi bi-info-circle me-1"></i>
                             Vous pouvez utiliser du HTML pour formater le texte
                         </small>
                     </div>
 
-                    <!-- Technologies -->
+                    <!-- Description -->
                     <div class="mb-4">
-                        <label class="admin-form-label">Technologies Utilisées</label>
-                        <div class="input-group mb-2">
-                            <input type="text" class="form-control admin-form-control" id="techInput"
-                                placeholder="Ex: Laravel, Vue.js, MySQL...">
-                            <button class="btn btn-admin-primary" type="button" onclick="addTech()">
-                                <i class="bi bi-plus"></i> Ajouter
-                            </button>
-                        </div>
-                        <div id="techList">
-                            <span class="tech-badge">Laravel<i class="bi bi-x-circle"
-                                    onclick="removeTech('Laravel')"></i></span>
-                            <span class="tech-badge">MySQL<i class="bi bi-x-circle"
-                                    onclick="removeTech('MySQL')"></i></span>
-                            <span class="tech-badge">Bootstrap<i class="bi bi-x-circle"
-                                    onclick="removeTech('Bootstrap')"></i></span>
-                        </div>
+                        <label class="admin-form-label">Content *</label>
+                        <textarea name="content"
+                            class="form-control admin-form-control @error('content') is-invalid @enderror" rows="6"
+                            placeholder="Décrivez votre projet en détail..."
+                            required>{{ old('content', $project->content) }}</textarea>
+                        @error('content')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small style="color: var(--admin-text-base);">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Vous pouvez utiliser du HTML pour formater le texte
+                        </small>
                     </div>
+
 
                     <!-- Project URL -->
                     <div class="mb-4">
                         <label class="admin-form-label">URL du Projet</label>
-                        <input type="url" class="form-control admin-form-control" value="https://drh.inphb.ci"
-                            placeholder="https://example.com">
+                        <input type="url" name="link" class="form-control admin-form-control"
+                            value="{{ old('link', $project->link) }}" placeholder="https://example.com">
                         <small style="color: var(--admin-text-base);">
                             <i class="bi bi-info-circle me-1"></i>
                             Lien vers le projet en ligne (optionnel)
@@ -145,8 +193,9 @@
                     <!-- GitHub URL -->
                     <div class="mb-4">
                         <label class="admin-form-label">URL GitHub</label>
-                        <input type="url" class="form-control admin-form-control"
-                            value="https://github.com/yousoft/drh-inphb" placeholder="https://github.com/username/repo">
+                        <input type="url" name="repo_link" class="form-control admin-form-control"
+                            value="{{ old('repo_link', $project->repo_link) }}"
+                            placeholder="https://github.com/username/repo">
                     </div>
                 </div>
             </div>
@@ -165,14 +214,18 @@
                             PNG, JPG jusqu'à 5MB
                         </small>
                     </div>
-                    <input type="file" id="imageInput" accept="image/*" style="display: none;"
+                    <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;"
                         onchange="previewImage(event)">
                     <img id="imagePreview" class="image-preview"
-                        src="https://via.placeholder.com/400x300/dca73a/0a1128?text=DRH+INP-HB" alt="Preview">
+                        src="{{ $project->image ? asset($project->image) : 'https://via.placeholder.com/400x300/dca73a/0a1128?text=No+Image' }}"
+                        alt="Preview">
                     <button type="button" class="btn btn-danger btn-sm remove-image" id="removeImageBtn"
-                        onclick="removeImage()">
+                        onclick="removeImage()" style="{{ $project->image ? '' : 'display:none;' }}">
                         <i class="bi bi-trash me-1"></i>Supprimer l'image
                     </button>
+                    @error('image')
+                        <div class="text-danger mt-2 small">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Status -->
@@ -181,24 +234,20 @@
 
                     <div class="mb-3">
                         <label class="admin-form-label">Statut</label>
-                        <select class="form-select admin-form-control">
-                            <option value="draft">Brouillon</option>
-                            <option value="published" selected>Publié</option>
-                            <option value="archived">Archivé</option>
+                        <select name="status" class="form-select admin-form-control">
+                            <option value="draft" {{ old('status', $project->status) == 'draft' ? 'selected' : '' }}>Brouillon
+                            </option>
+                            <option value="published" {{ old('status', $project->status) == 'published' ? 'selected' : '' }}>
+                                Publié</option>
+                            <option value="archived" {{ old('status', $project->status) == 'archived' ? 'selected' : '' }}>
+                                Archivé</option>
                         </select>
-                    </div>
-
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="featuredSwitch" checked
-                            style="cursor: pointer;">
-                        <label class="form-check-label admin-form-label" for="featuredSwitch" style="cursor: pointer;">
-                            Projet en vedette
-                        </label>
                     </div>
 
                     <div class="mb-3">
                         <label class="admin-form-label">Date de Réalisation</label>
-                        <input type="date" class="form-control admin-form-control" value="2026-01-15">
+                        <input type="date" name="completion_date" class="form-control admin-form-control"
+                            value="{{ old('completion_date', $project->completion_date ? $project->completion_date->format('Y-m-d') : '') }}">
                     </div>
                 </div>
 
@@ -207,7 +256,7 @@
                     <button type="submit" class="btn btn-admin-primary w-100 mb-2">
                         <i class="bi bi-check-circle me-2"></i>Enregistrer les Modifications
                     </button>
-                    <a href="{{ url('/admin/projects') }}" class="btn btn-admin-secondary w-100">
+                    <a href="{{ route('admin.projects') }}" class="btn btn-admin-secondary w-100">
                         <i class="bi bi-x-circle me-2"></i>Annuler
                     </a>
                 </div>
@@ -241,9 +290,9 @@
             const list = document.getElementById('techList');
             list.innerHTML = technologies.map(tech =>
                 `<span class="tech-badge">
-                    ${tech}
-                    <i class="bi bi-x-circle" onclick="removeTech('${tech}')"></i>
-                </span>`
+                        ${tech}
+                        <i class="bi bi-x-circle" onclick="removeTech('${tech}')"></i>
+                    </span>`
             ).join('');
         }
 
