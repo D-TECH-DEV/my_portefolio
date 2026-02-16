@@ -9,26 +9,33 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TestimonialController;
 
+use App\Http\Controllers\Admin\ProfileController;
+
+use App\Http\Controllers\Auth\LoginController;
+
 Route::get('/', [FrontController::class, "index"])->name("index");
-Route::post("/blog-details", [FrontController::class, "portfolioShow"])->name("blog.detail");
+// Route::post("/{slug}", [FrontController::class, "portfolioShow"])->name("blog.detail");
 Route::post("/contact", [\App\Http\Controllers\ContactController::class, "store"])->name("contact.store");
 
 Route::get('/avis', [TestimonialController::class, "create"])->name("avis");
 Route::post('/avis', [TestimonialController::class, "store"])->name("avis.store");
 
 Route::get('/you-soft-projet', [FrontController::class, "portfolio"])->name("portfolio");
+Route::get('/project/{slug}', [FrontController::class, "portfolioShow"])->name("project.detail");
 
+// Authentication Routes
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/detail-projet/{project}', [FrontController::class, "portfolioShow"])->name("project.detail");
-
-Route::prefix("/admin")->group(function () {
+Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     })->name("admin");
 
-    Route::get('/profile', function () {
-        return view('admin.profile.index');
-    })->name("admin.profile");
+    Route::get('/profile', [ProfileController::class, 'index'])->name("admin.profile");
+    Route::post('/profile', [ProfileController::class, 'update'])->name("admin.profile.update");
+    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name("admin.profile.password");
 
     // Les projets 
     Route::get('/projects', [ProjectController::class, 'index'])->name("admin.projects");
@@ -73,9 +80,9 @@ Route::prefix("/admin")->group(function () {
     })->name("admin.blog.create");
 
 
-    Route::get('/blogs/create', function () {
-        return view('admin.blogs.create');
-    })->name("admin.blog.create");
+    // Route::get('/blogs/create', function () {
+    //     return view('admin.blogs.create');
+    // })->name("admin.blog.create");
 
     Route::get('/blogs/edit', function () {
         return view('admin.blogs.edit');

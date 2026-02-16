@@ -37,15 +37,15 @@ class FrontController extends Controller
         return view("projects", $data);
     }
 
-    public function portfolioShow($project)
+    public function portfolioShow($slug)
     {
 
-    // dd($project);
+    // dd($slug);
         $data = [
-            "project" => Project::getOneProjetService($project)
+            "project" => Project::getOneProjetService($slug)
         ];
 
-        // dd(Project::getOneProjetService($project));
+        // dd(Project::getOneProjetService($slug));
         return view("project-details", $data);
     }
 

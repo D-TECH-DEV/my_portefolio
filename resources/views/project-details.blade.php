@@ -77,7 +77,7 @@
                         <div class="project-details-content wow fadeInUp delay-0-2s">
                             <h4 class="mb-4">{{ $project->description }}</h4>
                             <h3 class="big-letter">dDétail</h3>
-                            <p>{{ $project->content }}</p>
+                            <p>{!! $project->content !!}</p>
 
                             <h3 class="big-letter">tTechnologies</h3>
 

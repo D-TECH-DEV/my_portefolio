@@ -128,15 +128,15 @@
                         <div class="about-image-part wow fadeInUp delay-0-3s">
                             <img src="assets/images/about/about.png" alt="About Me">
                             <!-- <div class="about-btn btn-one wow fadeInRight delay-0-4s">
-                                        <img src="assets/images/about/btn-image1.png" alt="Image">
-                                        <h6>Experience Designer</h6>
-                                        <i class="fas fa-arrow-right"></i>
-                                    </div> -->
+                                            <img src="assets/images/about/btn-image1.png" alt="Image">
+                                            <h6>Experience Designer</h6>
+                                            <i class="fas fa-arrow-right"></i>
+                                        </div> -->
                             <!-- <div class="about-btn btn-two wow fadeInRight delay-0-5s">
-                                        <img src="assets/images/about/btn-image2.png" alt="Image">
-                                        <h6>Mark J. Collins</h6>
-                                        <i class="fas fa-arrow-right"></i>
-                                    </div> -->
+                                            <img src="assets/images/about/btn-image2.png" alt="Image">
+                                            <h6>Mark J. Collins</h6>
+                                            <i class="fas fa-arrow-right"></i>
+                                        </div> -->
                             {{-- <div class="dot-shape">
                                 <img src="assets/images/shape/about-dot.png" alt="Shape">
                             </div> --}}
@@ -161,10 +161,10 @@
         <div class="container">
             <div class="row">
                 <!-- <div class="col-lg-3">
-                            <div class="big-icon mt-85 rmt-0 rmb-55 wow fadeInUp delay-0-2s">
-                                <img src="assets/images/logos/logo3.png" alt="">
-                            </div>
-                        </div> -->
+                                <div class="big-icon mt-85 rmt-0 rmb-55 wow fadeInUp delay-0-2s">
+                                    <img src="assets/images/logos/logo3.png" alt="">
+                                </div>
+                            </div> -->
                 <div class="col-lg-12">
                     <div class="row ">
                         <div class="col-xl-8 col-lg-9">
@@ -366,7 +366,7 @@
                             <h2>{{ $project->title }}</h2>
                             <p>{{ $project->description }}</p>
 
-                            <a href="{{ route('project.detail', ["project" => $project]) }}" class="details-btn">
+                            <a href="{{ route('project.detail', ["slug"=> $project->slug]) }}" class="details-btn">
                                 <i class="far fa-arrow-right"></i>
                             </a>
 
@@ -684,17 +684,19 @@
     </div> --}}
     <!-- Client Log end -->
 
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <!-- Contact Feedback Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background: #1a1a1a; border: 1px solid #333; color: #fff;">
+            <div class="modal-content"
+                style="background: #111827; border: 1px solid #333; border-radius: 20px; color: #fff;">
                 <div class="modal-body text-center p-5">
-                    <div class="mb-4">
-                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    <div id="modalIconContainer" class="mb-4">
+                        <!-- Icon will be injected here -->
                     </div>
-                    <h3 class="mb-3">Message Envoyé !</h3>
-                    <p class="text-muted mb-4" id="successMessage">Votre message a été transmis avec succès. Je vous répondrai dans les plus brefs délais.</p>
-                    <button type="button" class="theme-btn" data-bs-dismiss="modal">Fermer</button>
+                    <h3 id="modalTitle" class="mb-3"></h3>
+                    <p id="modalMessage" class="text-light opacity-75 mb-4"></p>
+                    <button type="button" class="theme-btn w-100" data-bs-dismiss="modal"
+                        style="background: #dca73a; border: none; border-radius: 12px; padding: 12px; font-weight: 600;">Fermer</button>
                 </div>
             </div>
         </div>
@@ -703,7 +705,7 @@
 @endsection
 
 @push("js")
-<script>
+    <script>
 $(document).ready(function() {
     $('#contactFormLaravel').on('submit', function(e) {
         e.preventDefault();
@@ -715,7 +717,7 @@ $(document).ready(function() {
         // Disable button and show loading
         submitBtn.prop('disabled', true).html('Envoi en cours... <i class="fas fa-spinner fa-spin ms-2"></i>');
         
-        // Clear previous errors
+        // Clear previous error display if any
         $('#contactErrors').addClass('d-none');
         $('#errorList').empty();
 
@@ -725,10 +727,13 @@ $(document).ready(function() {
             data: form.serialize(),
             success: function(response) {
                 if(response.success) {
-                    // Show success modal
-                    $('#successMessage').text(response.message);
-                    let successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                    successModal.show();
+                    // Update Modal for SUCCESS
+                    $('#modalIconContainer').html('<i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>');
+                    $('#modalTitle').text('Message Envoyé !').css('color', '#dca73a');
+                    $('#modalMessage').text(response.message);
+                    
+                    let contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
+                    contactModal.show();
                     
                     // Reset form
                     form[0].reset();
@@ -736,14 +741,28 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 if(xhr.status === 422) {
-                    // Handle validation errors
+                    // Handle validation errors (show in inline div)
                     let errors = xhr.responseJSON.errors;
                     $('#contactErrors').removeClass('d-none');
                     $.each(errors, function(key, value) {
                         $('#errorList').append('<li>' + value[0] + '</li>');
                     });
+                    
+                    // Also show a general error modal
+                    $('#modalIconContainer').html('<i class="fas fa-exclamation-circle text-danger" style="font-size: 4rem;"></i>');
+                    $('#modalTitle').text('Erreur de saisie').css('color', '#dc3545');
+                    $('#modalMessage').text('Veuillez vérifier les informations saisies dans le formulaire.');
+                    
+                    let contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
+                    contactModal.show();
                 } else {
-                    alert("Une erreur est survenue lors de l'envoi du message. Veuillez réessayer.");
+                    // General system error
+                    $('#modalIconContainer').html('<i class="fas fa-times-circle text-danger" style="font-size: 4rem;"></i>');
+                    $('#modalTitle').text('Erreur d\'envoi').css('color', '#dc3545');
+                    $('#modalMessage').text('Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer plus tard.');
+                    
+                    let contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
+                    contactModal.show();
                 }
             },
             complete: function() {

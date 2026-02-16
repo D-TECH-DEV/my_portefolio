@@ -86,7 +86,7 @@
                         <div class="project-item style-two wow fadeInUp delay-0-2s">
                             <div class="project-image">
                                 <img src="{{ asset($project->image) }}" alt="Project">
-                                <a href="{{ route('project.detail', ['project' => $project]) }}" class="details-btn"><i class="far fa-arrow-right"></i></a>
+                                <a href="{{ route('project.detail', ['slug' => $project->slug]) }}" class="details-btn"><i class="far fa-arrow-right"></i></a>
                             </div>
                             <div class="project-content">
                                 <span class="sub-title">Product Design</span>

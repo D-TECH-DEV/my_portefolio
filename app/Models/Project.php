@@ -62,7 +62,7 @@ class Project extends Model
             ->get();
     }
 
-    public static function getOneProjetService($id)
+    public static function getOneProjetService($slug)
     {
         $project = \DB::table('projects as p')
             ->select(
@@ -76,7 +76,7 @@ class Project extends Model
             ->leftJoin('categories as c', 'c.id', '=', 'p.category_id')
             ->leftJoin('projects_skills as spk', 'spk.projects_id', '=', 'p.id')
             ->leftJoin('skills as sk', 'sk.id', '=', 'spk.skills_id')
-            ->where('p.id', $id)
+            ->where('p.slug', $slug)
             ->groupBy('p.id')
             ->first();
 
@@ -86,6 +86,8 @@ class Project extends Model
         } else {
             $project->skills = [];
         }
+
+        // dd($project);
 
         return $project;
     }

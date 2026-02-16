@@ -593,10 +593,21 @@
             <div class="admin-nav-divider"></div>
 
             <div class="admin-nav-item">
-                <a href="{{ route('index') }}" target="_blank" class="admin-nav-link }">
+                <a href="{{ route('index') }}" target="_blank" class="admin-nav-link">
                     <i class="bi bi-arrow-left-circle"></i>
                     <span>Retour au site</span>
                 </a>
+            </div>
+
+            <div class="admin-nav-item">
+                <a href="#" class="admin-nav-link text-danger"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Déconnexion</span>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </div>
         </nav>
     </aside>
@@ -627,8 +638,9 @@
             </button>
 
             <div class="admin-user-dropdown" data-bs-toggle="dropdown">
-                <img src="https://ui-avatars.com/api/?name=Youssouf+Doumdje&background=dca73a&color=0a1128" alt="User">
-                <span>Youssouf D.</span>
+                <img src="{{ auth()->user() && auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name ?? 'Admin') . '&background=dca73a&color=0a1128' }}"
+                    alt="User">
+                <span>{{ auth()->user()->name ?? 'Admin' }}</span>
                 <i class="bi bi-chevron-down"></i>
             </div>
             <ul class="dropdown-menu dropdown-menu-end"
