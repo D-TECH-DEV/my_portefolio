@@ -6,7 +6,9 @@
                 <div class="col-lg-2 col-md-12">
                     <div class="footer-widget widget_logo wow fadeInUp delay-0-2s">
                         <div class="footer-logo">
-                            <a href="index.html"><img src="assets/images/logos/logo3.png" alt="Logo"></a>
+                            <a href="{{ route('index') }}"><img
+                                    src="{{ isset($settings['site_logo']) ? asset('storage/' . $settings['site_logo']) : asset('assets/images/logos/logo3.png') }}"
+                                    alt="Logo"></a>
                         </div>
                     </div>
                 </div>
@@ -32,11 +34,19 @@
                     <div class="footer-widget widget_contact_info wow fadeInUp delay-0-6s">
                         <h6 class="footer-title">Adresse</h6>
                         <ul>
-                            <li><i class="far fa-map-marker-alt"></i> CI Yakro 220 logement</li>
-                            <li><i class="far fa-envelope"></i> <a
-                                    href="mailto:dydoumdje2004@gmail.com">dydoumdje2004@gmail.com</a></li>
-                            <li><i class="far fa-phone"></i> <a href="callto:+2250789681613">+225 07 89 68 16 13</a>
-                            </li>
+                            @if(isset($settings['contact_address']))
+                                <li><i class="far fa-map-marker-alt"></i> {{ $settings['contact_address'] }}</li>
+                            @endif
+                            @if(isset($settings['contact_email']))
+                                <li><i class="far fa-envelope"></i> <a
+                                        href="mailto:{{ $settings['contact_email'] }}">{{ $settings['contact_email'] }}</a>
+                                </li>
+                            @endif
+                            @if(isset($settings['contact_phone']))
+                                <li><i class="far fa-phone"></i> <a
+                                        href="callto:{{ str_replace(' ', '', $settings['contact_phone']) }}">{{ $settings['contact_phone'] }}</a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -48,15 +58,28 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="copyright-text">
-                        <p>Copyright @2026, <a href="{{ route('index') }}">You-Soft</a> Tous droits réservés</p>
+                        <p>Copyright &copy; 2026, <a
+                                href="{{ route('index') }}">{{ $settings['site_name'] ?? 'You-Soft' }}</a> Tous droits
+                            réservés</p>
                     </div>
                 </div>
                 <div class="col-lg-6 text-lg-end">
                     <ul class="footer-bottom-nav">
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">LinkedIn</a></li>
+                        @if (isset($settings['social_facebook']))
+                            <li><a href="{{ $settings['social_facebook'] }}" target="_blank">Facebook</a></li>
+                        @endif
+                        @if (isset($settings['social_twitter']))
+                            <li><a href="{{ $settings['social_twitter'] }}" target="_blank">Twitter</a></li>
+                        @endif
+                        @if (isset($settings['social_instagram']))
+                            <li><a href="{{ $settings['social_instagram'] }}" target="_blank">Instagram</a></li>
+                        @endif
+                        @if (isset($settings['social_linkedin']))
+                            <li><a href="{{ $settings['social_linkedin'] }}" target="_blank">LinkedIn</a></li>
+                        @endif
+                        @if (isset($settings['social_github']))
+                            <li><a href="{{ $settings['social_github'] }}" target="_blank">GitHub</a></li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -73,4 +96,4 @@
         </div>
     </div>
 </footer>
-<!-- footer area end --> 
+<!-- footer area end -->

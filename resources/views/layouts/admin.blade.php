@@ -600,7 +600,7 @@
             </div>
 
             <div class="admin-nav-item">
-                <a href="#" class="admin-nav-link text-danger"
+                <a href="{{ route("logout") }}" class="admin-nav-link text-danger"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Déconnexion</span>

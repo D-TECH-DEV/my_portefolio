@@ -1,32 +1,31 @@
- <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png" type="image/x-icon')}}">
+<link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
 
-    <!-- Flaticon -->
-    <link rel="stylesheet" href="{{ asset('assets/css/flaticon.min.css')}}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome-5.14.0.min.css')}}">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css')}}">
-    <!-- Nice Select -->
-    <link rel="stylesheet" href="{{ asset('assets/css/nice-select.min.css')}}">
-    <!-- Animate -->
-    <link rel="stylesheet" href="{{ asset('assets/css/animate.min.css')}}">
-    <!-- Slick -->
-    <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css')}}">
-    <!-- Main Style -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
+<!-- Flaticon -->
+<link rel="stylesheet" href="{{ asset('assets/css/flaticon.min.css')}}">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{{ asset('assets/css/fontawesome-5.14.0.min.css')}}">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css')}}">
+<!-- Nice Select -->
+<link rel="stylesheet" href="{{ asset('assets/css/nice-select.min.css')}}">
+<!-- Animate -->
+<link rel="stylesheet" href="{{ asset('assets/css/animate.min.css')}}">
+<!-- Slick -->
+<link rel="stylesheet" href="{{ asset('assets/css/slick.min.css')}}">
+<!-- Main Style -->
+<link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
 
-    <style>
-      .avatar-initial {
+<style>
+  .avatar-initial {
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    background: linear-gradient(135deg,#14053f,#fdf90d);
+    background: linear-gradient(135deg, #14053f, #fdf90d);
     color: #14053f;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
     font-size: 22px;
-}
-
-    </style>
+  }
+</style>

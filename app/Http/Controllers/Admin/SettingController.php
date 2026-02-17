@@ -12,6 +12,7 @@ class SettingController extends Controller
     public function index()
     {
         $settings = Setting::all()->pluck('value', 'key');
+        // dd($settings);
         return view('admin.settings.index', compact('settings'));
     }
 
@@ -19,6 +20,7 @@ class SettingController extends Controller
     {
         $data = $request->except(['_token', 'logo']);
 
+        // dd($request->all());
         foreach ($data as $key => $value) {
             Setting::set($key, $value);
         }
@@ -27,6 +29,9 @@ class SettingController extends Controller
             $path = $request->file('logo')->store('settings', 'public');
             Setting::set('site_logo', $path);
         }
+
+        // Clear settings cache
+        \Illuminate\Support\Facades\Cache::forget('site_settings');
 
         return redirect()->back()->with('success', 'Paramètres mis à jour avec succès.');
     }

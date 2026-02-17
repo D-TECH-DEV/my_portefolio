@@ -40,7 +40,12 @@
                         style="background: transparent; color: var(--admin-text-base); border: none; border-radius: 8px; margin-bottom: 5px;">
                         <i class="bi bi-envelope me-2"></i>Email
                     </a>
-                    <a href="#security-settings" class="list-group-item list-group-item-action"
+                    {{-- <a href="#security-settings" class="list-group-item list-group-item-action"
+                        style="background: transparent; color: var(--admin-text-base); border: none; border-radius: 8px; margin-bottom: 5px;">
+                        <i class="bi bi-shield-lock me-2"></i>Sécurité
+                    </a> --}}
+
+                    <a href="#social-settings" class="list-group-item list-group-item-action"
                         style="background: transparent; color: var(--admin-text-base); border: none; border-radius: 8px; margin-bottom: 5px;">
                         <i class="bi bi-shield-lock me-2"></i>Sécurité
                     </a>
@@ -89,6 +94,12 @@
                             <input type="tel" name="contact_phone" class="form-control admin-form-control"
                                 value="{{ $settings['contact_phone'] ?? '+225 07 89 68 16 13' }}">
                         </div>
+
+                        <div class="col-md-12 mb-4">
+                            <label class="admin-form-label">Adresse de Contact</label>
+                            <input type="text" name="contact_address" class="form-control admin-form-control"
+                                value="{{ $settings['contact_address'] ?? 'CI Yakro 220 logement' }}">
+                        </div>
                     </div>
 
                     <div class="mb-4">
@@ -122,44 +133,202 @@
                     </div>
                 </div>
 
-                <!-- SEO Settings -->
-                <div class="admin-card" id="seo-settings">
-                    <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">Paramètres SEO</h5>
+                <!-- Social Media Links -->
+                <div class="admin-card" id="social-settings">
+                    <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">Réseaux Sociaux</h5>
 
-                    <div class="mb-4">
-                        <label class="admin-form-label">Meta Title</label>
-                        <input type="text" name="meta_title" class="form-control admin-form-control"
-                            value="{{ $settings['meta_title'] ?? 'You-Soft | Développeur Full-Stack à Abidjan' }}">
-                        <small style="color: var(--admin-text-base);">Recommandé: 50-60 caractères</small>
+                    <div class="social-input-group">
+                        <div class="social-icon">
+                            <i class="bi bi-github"></i>
+                        </div>
+                        <input type="url" name="social_github" class="form-control admin-form-control"
+                            placeholder="https://github.com/username"
+                            value="{{ old('social_github', $settings["social_github"]) }}">
                     </div>
 
-                    <div class="mb-4">
-                        <label class="admin-form-label">Meta Description</label>
-                        <textarea name="meta_description" class="form-control admin-form-control"
-                            rows="3">{{ $settings['meta_description'] ?? "Portfolio de Youssouf Doumdje, développeur full-stack spécialisé en développement web et mobile. Services de programmation, design et maintenance informatique en Côte d'Ivoire." }}</textarea>
-                        <small style="color: var(--admin-text-base);">Recommandé: 150-160 caractères</small>
+                    <div class="social-input-group">
+                        <div class="social-icon">
+                            <i class="bi bi-linkedin"></i>
+                        </div>
+                        <input type="url" name="social_linkedin" class="form-control admin-form-control"
+                            placeholder="https://linkedin.com/in/username"
+                            value="{{ old('social_linkedin', $settings["social_linkedin"]) }}">
                     </div>
 
-                    <div class="mb-4">
-                        <label class="admin-form-label">Mots-clés (séparés par des virgules)</label>
-                        <input type="text" name="meta_keywords" class="form-control admin-form-control"
-                            value="{{ $settings['meta_keywords'] ?? 'développeur web, Laravel, Flutter, Abidjan, Côte d\'Ivoire, programmation' }}">
+                    <div class="social-input-group">
+                        <div class="social-icon">
+                            <i class="bi bi-twitter"></i>
+                        </div>
+                        <input type="url" name="social_twitter" class="form-control admin-form-control"
+                            placeholder="https://twitter.com/username"
+                            value="{{ old('social_twitter', $settings["social_twitter"]) }}">
                     </div>
 
-                    <div class="mb-4">
-                        <label class="admin-form-label">Google Analytics ID</label>
-                        <input type="text" name="google_analytics_id" class="form-control admin-form-control"
-                            value="{{ $settings['google_analytics_id'] ?? '' }}" placeholder="G-XXXXXXXXXX">
+                    <div class="social-input-group">
+                        <div class="social-icon">
+                            <i class="bi bi-facebook"></i>
+                        </div>
+                        <input type="url" name="social_facebook" class="form-control admin-form-control"
+                            placeholder="https://facebook.com/username"
+                            value="{{ old('social_facebook', $settings["social_facebook"]) }}">
                     </div>
 
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" name="allow_indexing" id="indexing" value="1"
-                            {{ ($settings['allow_indexing'] ?? '1') == '1' ? 'checked' : '' }} style="cursor: pointer;">
-                        <label class="form-check-label admin-form-label" for="indexing" style="cursor: pointer;">
-                            Autoriser l'indexation par les moteurs de recherche
-                        </label>
+                    <div class="social-input-group">
+                        <div class="social-icon">
+                            <i class="bi bi-instagram"></i>
+                        </div>
+                        <input type="url" name="social_instagram" class="form-control admin-form-control"
+                            placeholder="https://instagram.com/username"
+                            value="{{ old('social_instagram', $settings["social_instagram"]) }}">
                     </div>
                 </div>
+
+                <!-- SEO Settings -->
+                <div class="admin-card" id="seo-settings">
+    <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">
+        Paramètres SEO Avancés
+    </h5>
+
+    {{-- ================= BASIC SEO ================= --}}
+    <div class="mb-4">
+        <label class="admin-form-label">Meta Title</label>
+        <input type="text" name="meta_title" class="form-control admin-form-control"
+            value="{{ $settings['meta_title'] ?? '' }}">
+        <small>Recommandé : 50-60 caractères</small>
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Meta Description</label>
+        <textarea name="meta_description" class="form-control admin-form-control"
+            rows="3">{{ $settings['meta_description'] ?? '' }}</textarea>
+        <small>Recommandé : 150-160 caractères</small>
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Mots-clés (séparés par virgule)</label>
+        <input type="text" name="meta_keywords" class="form-control admin-form-control"
+            value="{{ $settings['meta_keywords'] ?? '' }}">
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">URL Canonical</label>
+        <input type="url" name="canonical_url" class="form-control admin-form-control"
+            value="{{ $settings['canonical_url'] ?? '' }}">
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Robots</label>
+        <input type="text" name="robots_content" class="form-control admin-form-control"
+            value="{{ $settings['robots_content'] ?? 'index, follow' }}">
+    </div>
+
+    {{-- ================= OPEN GRAPH ================= --}}
+    <hr>
+
+    <h6 style="margin-top:15px;">Open Graph (Facebook / LinkedIn)</h6>
+
+    <div class="mb-4">
+        <label class="admin-form-label">OG Title</label>
+        <input type="text" name="og_title" class="form-control admin-form-control"
+            value="{{ $settings['og_title'] ?? '' }}">
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">OG Description</label>
+        <textarea name="og_description" class="form-control admin-form-control"
+            rows="3">{{ $settings['og_description'] ?? '' }}</textarea>
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">OG Image</label>
+        <input type="text" name="og_image" class="form-control admin-form-control"
+            value="{{ $settings['og_image'] ?? '' }}">
+        <small>Image recommandée : 1200x630</small>
+    </div>
+
+    {{-- ================= TWITTER ================= --}}
+    <hr>
+
+    <h6>Twitter Card</h6>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Type de carte</label>
+        <select name="twitter_card" class="form-control admin-form-control">
+            <option value="summary"
+                {{ ($settings['twitter_card'] ?? '') == 'summary' ? 'selected' : '' }}>
+                Summary
+            </option>
+            <option value="summary_large_image"
+                {{ ($settings['twitter_card'] ?? '') == 'summary_large_image' ? 'selected' : '' }}>
+                Summary Large Image
+            </option>
+        </select>
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Twitter @username</label>
+        <input type="text" name="twitter_site" class="form-control admin-form-control"
+            value="{{ $settings['twitter_site'] ?? '' }}">
+    </div>
+
+    {{-- ================= LOCAL SEO ================= --}}
+    <hr>
+
+    <h6>Local SEO</h6>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Ville</label>
+        <input type="text" name="contact_city" class="form-control admin-form-control"
+            value="{{ $settings['contact_city'] ?? '' }}">
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Pays</label>
+        <input type="text" name="contact_country" class="form-control admin-form-control"
+            value="{{ $settings['contact_country'] ?? '' }}">
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Code Postal</label>
+        <input type="text" name="contact_postal_code" class="form-control admin-form-control"
+            value="{{ $settings['contact_postal_code'] ?? '' }}">
+    </div>
+
+    {{-- ================= GOOGLE ================= --}}
+    <hr>
+
+    <h6>Google</h6>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Google Analytics ID</label>
+        <input type="text" name="google_analytics_id" class="form-control admin-form-control"
+            value="{{ $settings['google_analytics_id'] ?? '' }}"
+            placeholder="G-XXXXXXXXXX">
+    </div>
+
+    <div class="mb-4">
+        <label class="admin-form-label">Google Site Verification</label>
+        <input type="text" name="google_site_verification"
+            class="form-control admin-form-control"
+            value="{{ $settings['google_site_verification'] ?? '' }}">
+    </div>
+
+    {{-- ================= INDEXATION ================= --}}
+    <hr>
+
+    <div class="form-check form-switch mb-3">
+        <input class="form-check-input" type="checkbox"
+            name="allow_indexing"
+            id="indexing"
+            value="1"
+            {{ ($settings['allow_indexing'] ?? '1') == '1' ? 'checked' : '' }}>
+        <label class="form-check-label admin-form-label" for="indexing">
+            Autoriser l'indexation par les moteurs de recherche
+        </label>
+    </div>
+
+</div>
+
 
                 <!-- Email Settings -->
                 <div class="admin-card" id="email-settings">
@@ -212,7 +381,7 @@
                 </div>
 
                 <!-- Security Settings (Note: This might need a separate controller/logic if password change is involved) -->
-                <div class="admin-card" id="security-settings">
+                {{-- <div class="admin-card" id="security-settings">
                     <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">Sécurité</h5>
 
                     <div class="mb-4">
@@ -241,7 +410,7 @@
                     <button type="submit" name="action" value="update_password" class="btn btn-admin-primary">
                         <i class="bi bi-shield-check me-2"></i>Mettre à Jour le Mot de Passe
                     </button>
-                </div>
+                </div> --}}
 
                 <!-- Appearance Settings -->
                 <div class="admin-card" id="appearance-settings">
@@ -289,6 +458,28 @@
             </form>
         </div>
     </div>
+
+
+    <style>
+        .social-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--admin-lighter);
+            color: var(--admin-accent);
+            font-size: 18px;
+        }
+    </style>
 @endsection
 
 @section('scripts')
@@ -325,3 +516,4 @@
         });
     </script>
 @endsection
+

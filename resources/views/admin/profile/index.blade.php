@@ -127,7 +127,7 @@
                     </div>
                 </div>
 
-                <!-- Social Media Links -->
+                {{-- <!-- Social Media Links -->
                 <div class="admin-card">
                     <h5 style="color: var(--admin-text-heading); margin-bottom: 20px;">Réseaux Sociaux</h5>
 
@@ -175,7 +175,7 @@
                             placeholder="https://instagram.com/username"
                             value="{{ old('social_instagram', $user->social_instagram) }}">
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Professional Information -->
                 <div class="admin-card">

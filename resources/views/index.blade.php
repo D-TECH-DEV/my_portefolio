@@ -59,8 +59,12 @@
                         <p>Fondateur de You-Soft, je conçois des solutions digitales innovantes et performantes.
                             Réinventons le futur ligne par ligne.</p>
                         <div class="hero-btns">
-                            <a href="contact.html" class="theme-btn">Me contacter <i class="far fa-angle-right"></i></a>
-                            <a href="contact.html" class="read-more">Mon CV <i class="far fa-angle-right"></i></a>
+                            <a href="mailto:{{ $settings['contact_email'] ?? '' }}" class="theme-btn">Me contacter <i class="far fa-angle-right"></i></a>
+                            <a href="{{ asset('storage/' . $settings['cv_pdf']) }}" 
+                                class="read-more" 
+                                download>
+                                Mon CV <i class="far fa-angle-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -111,14 +115,16 @@
                                     <i class="far fa-envelope"></i>
                                     <div class="content">
                                         <span>Contactez-nous</span><br>
-                                        <a href="mailto:dydoumdje2004@gmail.com">dydoumdje2004@gmail.com</a>
+                                        <a href="mailto:{{ $settings['contact_email'] ?? '' }}">
+                                            {{ $settings['contact_email'] ?? '' }}
+                                        </a>                                    
                                     </div>
                                 </div>
                                 <div class="info-box-item">
                                     <i class="far fa-phone"></i>
                                     <div class="content">
                                         <span>Appelez-nous</span><br>
-                                        <a href="callto:+2250789681613">+225 07 89 68 16 13</a>
+                                        <a href="callto:{{ $settings['contact_phone'] ?? '' }}">{{ $settings['contact_email'] ?? '' }}</a>
                                     </div>
                                 </div>
                             </div>

@@ -7,7 +7,9 @@
             <div class="header-inner rel d-flex align-items-center">
                 <div class="logo-outer">
                     <div class="logo"><a href="{{ route("index") }}"><img
-                                src="{{ asset('assets/images/logos/logo.png') }}" alt="Logo" title="Logo"></a></div>
+                                src="{{ isset($settings['site_logo']) ? asset('storage/' . $settings['site_logo']) : asset('assets/images/logos/logo.png') }}"
+                                alt="{{ $settings['site_name'] ?? 'Logo' }}"
+                                title="{{ $settings['site_name'] ?? 'Logo' }}"></a></div>
                 </div>
 
                 <div class="nav-outer clearfix mx-auto">
@@ -15,9 +17,10 @@
                     <nav class="main-menu navbar-expand-lg">
                         <div class="navbar-header">
                             <div class="mobile-logo my-15">
-                                <a href="index.html">
-                                    <img src="{{ asset('assets/images/logos/logo.png') }}" class="img-fluid" alt="Logo"
-                                        title="Logo">
+                                <a href="{{ route("index") }}">
+                                    <img src="{{ isset($settings['site_logo']) ? asset('storage/' . $settings['site_logo']) : asset('assets/images/logos/logo.png') }}"
+                                        class="img-fluid" alt="{{ $settings['site_name'] ?? 'Logo' }}"
+                                        title="{{ $settings['site_name'] ?? 'Logo' }}">
                                 </a>
                             </div>
 
