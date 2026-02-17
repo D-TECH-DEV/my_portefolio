@@ -10,6 +10,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TestimonialController;
 
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
 
 use App\Http\Controllers\Auth\LoginController;
 
@@ -97,8 +98,7 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::post('/testimonials/{testimonial}/toggle', [TestimonialController::class, 'toggleStatus'])->name("admin.testimonials.toggle");
     Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name("admin.testimonials.destroy");
 
-    Route::get('/settings', function () {
-        return view('admin.settings.index');
-    })->name("admin.settings");
+    Route::get('/settings', [SettingController::class, 'index'])->name("admin.settings");
+    Route::post('/settings', [SettingController::class, 'update'])->name("admin.settings.update");
 });
 
