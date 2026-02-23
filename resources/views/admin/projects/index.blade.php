@@ -133,7 +133,7 @@
                                 @endif
                             </td>
                             <td class="text-nowrap">
-                                <a href="{{ route('project.detail', $project->id) }}"
+                                <a href="{{ route('project.detail', $project->slug) }}"
                                     class="btn btn-xs btn-admin-secondary me-1 px-2 py-1"
                                     title="Voir" target="_blank">
                                     <i class="bi bi-eye small"></i>

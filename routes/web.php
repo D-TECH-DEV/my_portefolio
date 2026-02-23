@@ -30,9 +30,7 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::prefix("/admin")->middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name("admin");
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name("admin");
 
     Route::get('/profile', [ProfileController::class, 'index'])->name("admin.profile");
     Route::post('/profile', [ProfileController::class, 'update'])->name("admin.profile.update");

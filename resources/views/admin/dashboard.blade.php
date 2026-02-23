@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard')
+@section('title', 'Tableau de bord')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active">Dashboard</li>
@@ -8,364 +8,391 @@
 
 @section('styles')
     <style>
-        .stat-card {
-            background: linear-gradient(135deg, var(--admin-bg-secondary) 0%, var(--admin-lighter) 100%);
-            border: 1px solid var(--admin-border);
-            border-radius: 15px;
+        .dashboard-container {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats Cards - Premium Glassmorphism */
+        .stat-card-premium {
+            background: var(--admin-lighter);
+            /* border: 1px solid var(--admin-border); */
+            /* background: rgba(13, 27, 62, 0.4); */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(220, 167, 58, 0.1);
+            border-radius: 20px;
             padding: 25px;
-            margin-bottom: 25px;
             position: relative;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             overflow: hidden;
-            transition: all 0.3s ease;
+            height: 100%;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(220, 167, 58, 0.2);
+        .stat-card-premium:hover {
+            transform: translateY(-10px);
+            border-color: rgba(220, 167, 58, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(220, 167, 58, 0.1);
         }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: var(--admin-accent);
-            opacity: 0.1;
-            border-radius: 50%;
-            transform: translate(30%, -30%);
-        }
-
-        .stat-card-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
+        .stat-card-premium .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        .stat-card-icon.primary {
-            background: rgba(220, 167, 58, 0.2);
+            font-size: 24px;
+            margin-bottom: 20px;
+            background: rgba(220, 167, 58, 0.1);
             color: var(--admin-accent);
+            transition: all 0.3s ease;
         }
 
-        .stat-card-icon.success {
-            background: rgba(40, 167, 69, 0.2);
-            color: #28a745;
+        .stat-card-premium:hover .icon-box {
+            background: var(--admin-accent);
+            color: #0a1128;
+            transform: scale(1.1) rotate(5deg);
         }
 
-        .stat-card-icon.info {
-            background: rgba(23, 162, 184, 0.2);
-            color: #17a2b8;
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #fff;
+            letter-spacing: -1px;
         }
 
-        .stat-card-icon.warning {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-        }
-
-        .stat-card-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--admin-text-heading);
-            margin: 10px 0;
-        }
-
-        .stat-card-label {
-            color: var(--admin-text-base);
+        .stat-label {
             font-size: 14px;
+            color: var(--admin-text-base);
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
-        .stat-card-trend {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-            margin-top: 10px;
-            padding: 4px 10px;
-            border-radius: 20px;
+        /* Ambient Glow */
+        .stat-card-premium::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220, 167, 58, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
-        .stat-card-trend.up {
-            background: rgba(40, 167, 69, 0.2);
-            color: #28a745;
+        .stat-card-premium:hover::after {
+            opacity: 1;
         }
 
-        .stat-card-trend.down {
-            background: rgba(220, 53, 69, 0.2);
-            color: #dc3545;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 300px;
-            margin-top: 20px;
-        }
-
-        .project-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        .quick-actions {
+        /* Quick Actions Grid */
+        .quick-actions-premium {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: var(--admin-lighter);
+            border: 1px solid var(--admin-border);
+            border-radius: 18px;
+            padding: 24px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            background: var(--admin-accent);
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(220, 167, 58, 0.2);
+        }
+
+        .stat-card i {
+            font-size: 28px;
+            color: var(--admin-accent);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .stat-card:hover i, .stat-card:hover span {
+            color: #0a1128;
+        }
+
+        .stat-card span {
+            font-weight: 600;
+            color: var(--admin-text-heading);
+            font-size: 14px;
+        }
+
+        /* Modern Table & Lists */
+        .premium-card {
+            background: rgba(13, 27, 62, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(220, 167, 58, 0.1);
+            border-radius: 20px;
+            padding: 30px;
             margin-bottom: 30px;
         }
 
-        .quick-action-btn {
-            background: var(--admin-lighter);
-            border: 1px solid var(--admin-border);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            color: var(--admin-text-base);
-            text-decoration: none;
-            transition: all 0.3s ease;
+        .premium-card-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .premium-card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .quick-action-btn:hover {
+        .premium-card-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
             background: var(--admin-accent);
-            color: var(--admin-bg-secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(220, 167, 58, 0.3);
+            border-radius: 2px;
         }
 
-        .quick-action-btn i {
-            font-size: 32px;
+        .view-all-link {
+            color: var(--admin-accent);
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .view-all-link:hover {
+            opacity: 0.8;
+            padding-right: 5px;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .project-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .project-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: var(--admin-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--admin-accent);
+            margin-right: 15px;
+        }
+
+        .message-row:hover {
+            background: rgba(220, 167, 58, 0.05) !important;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .unread-badge {
+            background: var(--admin-accent);
+            color: #0a1128;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="row mb-4">
-        <div class="col-12">
-            <h2 style="color: var(--admin-text-heading); margin-bottom: 5px;">Bienvenue, Youssouf 👋</h2>
-            <p style="color: var(--admin-text-base);">Voici un aperçu de votre activité</p>
-        </div>
-    </div>
-
-    <!-- Statistics Cards -->
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="stat-card">
-                <div class="stat-card-icon primary">
-                    <i class="bi bi-folder"></i>
-                </div>
-                <div class="stat-card-value">12</div>
-                <div class="stat-card-label">Projets</div>
-                <span class="stat-card-trend up">
-                    <i class="bi bi-arrow-up"></i> +3 ce mois
-                </span>
+    <div class="dashboard-container">
+        <!-- Greetings -->
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h1 class="h2 mb-1" style="color: #fff; font-weight: 800;">Bonjour, {{ explode(' ', auth()->user()->name)[0] }} ✨</h1>
+                <p style="color: var(--admin-text-base); font-size: 16px;">Prêt à transformer vos idées en réalité aujourd'hui ?</p>
+            </div>
+            <div class="d-none d-md-block text-end">
+                <div style="font-size: 14px; color: var(--admin-text-base);">{{ now()->translatedFormat('l d F Y') }}</div>
+                <div style="font-size: 24px; font-weight: 700; color: var(--admin-accent);">{{ now()->translatedFormat('H:i') }}</div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-md-6">
-            <div class="stat-card">
-                <div class="stat-card-icon success">
-                    <i class="bi bi-star"></i>
+        <!-- Stats Overview -->
+        <div class="row g-4">
+            <a href="{{ route('admin.projects') }}" class="col-xl-3 col-sm-6">
+                <div class="stat-card-premium">
+                    <div class="icon-box">
+                        <i class="bi bi-grid-1x2"></i>
+                    </div>
+                    <div class="stat-value">{{ $stats['projects'] }}</div>
+                    <div class="stat-label">Projets créés</div>
                 </div>
-                <div class="stat-card-value">18</div>
-                <div class="stat-card-label">Compétences</div>
-                <span class="stat-card-trend up">
-                    <i class="bi bi-arrow-up"></i> +2 ce mois
-                </span>
-            </div>
+            </a>
+            <a href="{{ route('admin.skills') }}" class="col-xl-3 col-sm-6">
+                <div class="stat-card-premium">
+                    <div class="icon-box">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <div class="stat-value">{{ $stats['skills'] }}</div>
+                    <div class="stat-label">Compétences</div>
+                </div>
+            </a>
+            <a href="{{ route('admin.messages') }}" class="col-xl-3 col-sm-6">
+                <div class="stat-card-premium">
+                    <div class="icon-box">
+                        <i class="bi bi-chat-left-text"></i>
+                    </div>
+                    <div class="stat-value">{{ $stats['messages'] }}</div>
+                    <div class="stat-label">Messages totaux</div>
+                    @if($stats['unread_messages'] > 0)
+                        <div class="mt-2 unread-badge">{{ $stats['unread_messages'] }} Non lus</div>
+                    @endif
+                </div>
+            </a>
+            <a href="{{ route('admin.testimonials') }}" class="col-xl-3 col-sm-6">
+                <div class="stat-card-premium">
+                    <div class="icon-box">
+                        <i class="bi bi-quote"></i>
+                    </div>
+                    <div class="stat-value">{{ $stats['testimonials'] }}</div>
+                    <div class="stat-label">Avis clients</div>
+                </div>
+            </a>
         </div>
 
-        <div class="col-xl-3 col-md-6">
-            <div class="stat-card">
-                <div class="stat-card-icon info">
-                    <i class="bi bi-briefcase"></i>
-                </div>
-                <div class="stat-card-value">6</div>
-                <div class="stat-card-label">Services</div>
-                <span class="stat-card-trend">
-                    <i class="bi bi-dash"></i> Stable
-                </span>
-            </div>
-        </div>
 
-        <div class="col-xl-3 col-md-6">
-            <div class="stat-card">
-                <div class="stat-card-icon warning">
-                    <i class="bi bi-envelope"></i>
-                </div>
-                <div class="stat-card-value">24</div>
-                <div class="stat-card-label">Messages</div>
-                <span class="stat-card-trend up">
-                    <i class="bi bi-arrow-up"></i> +8 cette semaine
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <a href="{{ url('/admin/projects/create') }}" class="quick-action-btn">
-            <i class="bi bi-plus-circle"></i>
-            <span>Nouveau Projet</span>
-        </a>
-        <a href="{{ url('/admin/skills/create') }}" class="quick-action-btn">
-            <i class="bi bi-plus-circle"></i>
-            <span>Nouvelle Compétence</span>
-        </a>
-        <a href="{{ url('/admin/services/create') }}" class="quick-action-btn">
-            <i class="bi bi-plus-circle"></i>
-            <span>Nouveau Service</span>
-        </a>
-        <a href="{{ url('/admin/messages') }}" class="quick-action-btn">
-            <i class="bi bi-envelope-open"></i>
-            <span>Voir Messages</span>
-        </a>
-    </div>
-
-    <!-- Charts and Tables Row -->
-    <div class="row">
-        <!-- Chart -->
-        <div class="col-lg-8">
-            <div class="admin-card">
-                <div class="admin-card-header">
-                    <h5>Activité des Projets</h5>
-                    <select class="form-select form-select-sm admin-form-control" style="width: auto;">
-                        <option>6 derniers mois</option>
-                        <option>12 derniers mois</option>
-                        <option>Cette année</option>
-                    </select>
-                </div>
-                <div class="chart-container">
-                    <canvas id="projectsChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Recent Projects -->
-        <div class="col-lg-4">
-            <div class="admin-card">
-                <div class="admin-card-header">
-                    <h5>Projets Récents</h5>
-                    <a href="{{ url('/admin/projects') }}"
-                        style="color: var(--admin-accent); font-size: 14px; text-decoration: none;">Voir tout</a>
-                </div>
-                <div class="list-group" style="background: transparent;">
-                    <div class="list-group-item"
-                        style="background: var(--admin-lighter); border: 1px solid var(--admin-border); margin-bottom: 10px; border-radius: 10px;">
-                        <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/50/dca73a/0a1128?text=DRH" class="project-img me-3"
-                                alt="Project">
-                            <div class="flex-grow-1">
-                                <h6 style="color: var(--admin-text-heading); margin: 0; font-size: 14px;">Projet DRH INP-HB
-                                </h6>
-                                <small style="color: var(--admin-text-base);">Développement Web</small>
-                            </div>
-                            <span class="badge-admin-success">Publié</span>
+        <div class="row">
+            <!-- Analytics Chart -->
+            <div class="col-lg-8">
+                <div class="premium-card">
+                    <div class="premium-card-header">
+                        <h3 class="premium-card-title">Progression Portfolio</h3>
+                        <div class="badge bg-dark-subtle text-accent border border-accent-subtle px-3 py-2 rounded-pill">
+                            Derniers 6 mois
                         </div>
                     </div>
-
-                    <div class="list-group-item"
-                        style="background: var(--admin-lighter); border: 1px solid var(--admin-border); margin-bottom: 10px; border-radius: 10px;">
-                        <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/50/dca73a/0a1128?text=PSR" class="project-img me-3"
-                                alt="Project">
-                            <div class="flex-grow-1">
-                                <h6 style="color: var(--admin-text-heading); margin: 0; font-size: 14px;">Plateforme PSR
-                                </h6>
-                                <small style="color: var(--admin-text-base);">Back-office</small>
-                            </div>
-                            <span class="badge-admin-success">Publié</span>
-                        </div>
+                    <div style="height: 350px;">
+                        <canvas id="portfolioChart"></canvas>
                     </div>
+                </div>
+            </div>
 
-                    <div class="list-group-item"
-                        style="background: var(--admin-lighter); border: 1px solid var(--admin-border); margin-bottom: 10px; border-radius: 10px;">
-                        <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/50/dca73a/0a1128?text=BAC" class="project-img me-3"
-                                alt="Project">
-                            <div class="flex-grow-1">
-                                <h6 style="color: var(--admin-text-heading); margin: 0; font-size: 14px;">Concours BAC</h6>
-                                <small style="color: var(--admin-text-base);">Migration Laravel</small>
+            <!-- Recent Items Side -->
+            <div class="col-lg-4">
+                <div class="premium-card h-100 mb-0">
+                    <div class="premium-card-header">
+                        <h3 class="premium-card-title">Derniers Projets</h3>
+                        <a href="{{ route('admin.projects') }}" class="view-all-link">Voir tout <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="recent-list mt-4">
+                        @forelse($recent_projects as $project)
+                            <div class="project-item">
+                                @if($project->image)
+                                    <div class="project-icon" style="background-image: url('{{ asset('storage/'.$project->image) }}'); background-size: cover;"></div>
+                                @else
+                                    <div class="project-icon"><i class="bi bi-image"></i></div>
+                                @endif
+                                <div class="flex-grow-1">
+                                    <div style="color: #fff; font-weight: 600; font-size: 14px;">{{ Str::limit($project->title, 25) }}</div>
+                                    <div style="color: var(--admin-text-base); font-size: 12px;">{{ $project->category ?? 'Web Design' }}</div>
+                                </div>
+                                <div class="status-dot {{ $project->status == 'published' ? 'bg-success' : 'bg-warning' }}"></div>
                             </div>
-                            <span class="badge-admin-warning">Brouillon</span>
-                        </div>
+                        @empty
+                            <p class="text-center py-4" style="color: var(--admin-text-base);">Aucun projet récent</p>
+                        @endforelse
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Recent Messages -->
-    <div class="row">
-        <div class="col-12">
-            <div class="admin-card">
-                <div class="admin-card-header">
-                    <h5>Messages Récents</h5>
-                    <a href="{{ url('/admin/messages') }}"
-                        style="color: var(--admin-accent); font-size: 14px; text-decoration: none;">Voir tout</a>
-                </div>
-                <div class="table-responsive">
-                    <table class="admin-table table">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Email</th>
-                                <th>Sujet</th>
-                                <th>Date</th>
-                                <th>Statut</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="color: var(--admin-text-heading); font-weight: 600;">Jean Kouassi</td>
-                                <td>jean.kouassi@example.com</td>
-                                <td>Demande de devis site web</td>
-                                <td>08 Fév 2026</td>
-                                <td><span class="badge-admin-info">Non lu</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-admin-secondary">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="color: var(--admin-text-heading); font-weight: 600;">Marie Diabaté</td>
-                                <td>marie.diabate@example.com</td>
-                                <td>Collaboration projet mobile</td>
-                                <td>07 Fév 2026</td>
-                                <td><span class="badge-admin-success">Lu</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-admin-secondary">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="color: var(--admin-text-heading); font-weight: 600;">Abdoul Traoré</td>
-                                <td>abdoul.traore@example.com</td>
-                                <td>Question sur vos services</td>
-                                <td>06 Fév 2026</td>
-                                <td><span class="badge-admin-success">Lu</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-admin-secondary">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- Recent Messages Full Width -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="premium-card">
+                    <div class="premium-card-header">
+                        <h3 class="premium-card-title">Messages Récents</h3>
+                        <a href="{{ route('admin.messages') }}" class="view-all-link">Détails <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                    <div class="table-responsive mt-3">
+                        <table class="table admin-table" style="--bs-table-bg: transparent;">
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Expéditeur</th>
+                                    <th>Sujet</th>
+                                    <th>Date</th>
+                                    <th>Statut</th>
+                                    <th class="text-end pe-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($recent_messages as $message)
+                                    <tr class="message-row align-middle border-transparent">
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-initial small me-3" style="width: 35px; height: 35px; font-size: 14px;">
+                                                    {{ strtoupper(substr($message->name, 0, 1)) }}
+                                                </div>
+                                                <div>
+                                                    <div style="color: #fff; font-weight: 600;">{{ $message->name }}</div>
+                                                    <div style="font-size: 12px; opacity: 0.6;">{{ $message->email }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="color: var(--admin-text-base);">{{ Str::limit($message->subject, 30) }}</td>
+                                        <td style="font-size: 13px;">{{ $message->created_at->diffForHumans() }}</td>
+                                        <td>
+                                            @if($message->is_read)
+                                                <span class="badge border border-success-subtle text-success bg-success-subtle rounded-pill" style="font-size: 10px;">LU</span>
+                                            @else
+                                                <span class="badge border border-warning-subtle text-warning bg-warning-subtle rounded-pill" style="font-size: 10px;">NON LU</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            <a href="{{ route('admin.messages.show', $message->id) }}" class="btn btn-sm btn-admin-secondary p-2 rounded-3">
+                                                <i class="bi bi-eye m-0"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5" style="color: var(--admin-text-base);">Félicitations ! Votre boîte de réception est vide.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -375,66 +402,81 @@
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        // Projects Activity Chart
-        const ctx = document.getElementById('projectsChart').getContext('2d');
-        const projectsChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Septembre', 'Octobre', 'Novembre', 'Décembre', 'Janvier', 'Février'],
-                datasets: [{
-                    label: 'Projets créés',
-                    data: [2, 3, 1, 4, 2, 3],
-                    borderColor: '#dca73a',
-                    backgroundColor: 'rgba(220, 167, 58, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#dca73a',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#0d1b3e',
-                        titleColor: '#ffffff',
-                        bodyColor: '#aab8c5',
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('portfolioChart').getContext('2d');
+            
+            // Create Gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(220, 167, 58, 0.4)');
+            gradient.addColorStop(1, 'rgba(220, 167, 58, 0)');
+
+            const chartData = @json($chart_data);
+
+            const portfolioChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Projets créés',
+                        data: chartData.data,
                         borderColor: '#dca73a',
-                        borderWidth: 1,
-                        padding: 12,
-                        displayColors: false
-                    }
+                        backgroundColor: gradient,
+                        borderWidth: 4,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#dca73a',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 3,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        pointHoverBorderWidth: 4
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            color: '#aab8c5',
-                            stepSize: 1
-                        },
-                        grid: {
-                            color: 'rgba(220, 167, 58, 0.1)',
-                            drawBorder: false
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0d1b3e',
+                            titleColor: '#fff',
+                            bodyColor: '#aab8c5',
+                            borderColor: 'rgba(220, 167, 58, 0.5)',
+                            borderWidth: 1,
+                            padding: 15,
+                            cornerRadius: 12,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y + ' Projets ajoutés';
+                                }
+                            }
                         }
                     },
-                    x: {
-                        ticks: {
-                            color: '#aab8c5'
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false },
+                            ticks: { 
+                                color: '#aab8c5',
+                                font: { size: 12 },
+                                stepSize: 1
+                            }
                         },
-                        grid: {
-                            display: false
+                        x: {
+                            grid: { display: false },
+                            ticks: { 
+                                color: '#aab8c5',
+                                font: { size: 12 }
+                            }
                         }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
                     }
                 }
-            }
+            });
         });
     </script>
 @endsection

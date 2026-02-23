@@ -17,6 +17,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Serif:wght@400;700&display=swap"
         rel="stylesheet">
 
+    <link rel="shortcut icon"
+    href="{{ asset('assets/images/favicon.png') }}">
+
     <style>
         :root {
             --admin-bg: #0a1128;
@@ -63,8 +66,9 @@
             left: 0;
             width: var(--admin-sidebar-width);
             height: 100vh;
-            background: var(--admin-bg-secondary);
-            border-right: 1px solid var(--admin-border);
+            background: rgba(13, 27, 62, 0.8);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(220, 167, 58, 0.1);
             z-index: 1000;
             overflow-y: auto;
             transition: all 0.3s ease;
@@ -75,81 +79,24 @@
         }
 
         .admin-sidebar::-webkit-scrollbar-track {
-            background: var(--admin-bg-secondary);
+            background: transparent;
         }
 
         .admin-sidebar::-webkit-scrollbar-thumb {
-            background: var(--admin-lighter);
+            background: rgba(220, 167, 58, 0.2);
             border-radius: 3px;
         }
 
         .admin-sidebar .brand {
-            padding: 20px 25px;
-            border-bottom: 1px solid var(--admin-border);
-        }
-
-        .admin-sidebar .brand h4 {
-            color: var(--admin-accent);
-            font-size: 24px;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .admin-sidebar .brand span {
-            color: var(--admin-text-base);
-            font-size: 12px;
-            display: block;
-            margin-top: 5px;
-        }
-
-        .admin-nav {
-            padding: 20px 0;
-        }
-
-        .admin-nav-item {
-            margin: 5px 15px;
-        }
-
-        .admin-nav-link
-
-        {{ request()->routeIs('admin') ? 'active' : '' }}
-            {
+            padding: 25px;
+            border-bottom: 1px solid rgba(220, 167, 58, 0.1);
             display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            color: var(--admin-text-base);
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-size: 15px;
+            justify-content: center;
         }
 
-        .admin-nav-link
-
-        {{ request()->routeIs('admin') ? 'active' : '' }}
-        i {
-            font-size: 18px;
-            margin-right: 12px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .admin-nav-link:hover {
-            background: var(--admin-lighter);
-            color: var(--admin-accent);
-            transform: translateX(5px);
-        }
-
-        .admin-nav-link.active {
-            background: var(--admin-accent);
-            color: var(--admin-bg-secondary);
-            font-weight: 600;
-        }
-
-        .admin-nav-divider {
-            height: 1px;
-            background: var(--admin-border);
-            margin: 15px 25px;
+        .admin-sidebar .brand img {
+            max-height: 40px;
+            filter: drop-shadow(0 0 5px rgba(220, 167, 58, 0.3));
         }
 
         /* Topbar Styles */
@@ -159,8 +106,9 @@
             left: var(--admin-sidebar-width);
             right: 0;
             height: var(--admin-topbar-height);
-            background: var(--admin-bg-secondary);
-            border-bottom: 1px solid var(--admin-border);
+            background: rgba(13, 27, 62, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(220, 167, 58, 0.1);
             z-index: 999;
             display: flex;
             align-items: center;
@@ -461,6 +409,60 @@
             cursor: pointer;
         }
 
+        .admin-nav {
+            padding: 20px 0;
+        }
+
+        .admin-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .admin-nav-item {
+            padding: 0 15px;
+            margin-bottom: 5px;
+        }
+
+        .admin-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            color: var(--admin-text-base);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .admin-nav-link i {
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-link:hover {
+            background: rgba(220, 167, 58, 0.1);
+            color: var(--admin-accent);
+            transform: translateX(5px);
+        }
+
+        .admin-nav-link.active {
+            background: var(--admin-accent);
+            color: var(--admin-bg-secondary);
+            box-shadow: 0 4px 15px rgba(220, 167, 58, 0.3);
+        }
+
+        .admin-nav-link.active i {
+            color: var(--admin-bg-secondary);
+        }
+
+        .admin-nav-divider {
+            height: 1px;
+            background: rgba(220, 167, 58, 0.1);
+            margin: 20px 25px;
+        }
+
         /* Responsive */
         @media (max-width: 991px) {
             .admin-sidebar {
@@ -510,105 +512,107 @@
 
 <body>
 
-    <!-- Sidebar -->
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="brand">
             <img src="{{ asset("assets/images/logos/logo.png") }}" class="img-fluid" alt="">
         </div>
 
         <nav class="admin-nav">
-            <div class="admin-nav-item">
-                <a href="{{ route('admin') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin') ? 'active' : '' }} ">
-                    <i class="bi bi-speedometer2"></i>
-                    <span>Dashboard</span>
-                </a>
-            </div>
+            <ul class="admin-nav-list">
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin') ? 'active' : '' }} ">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('admin.projects') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.projects*') ? 'active' : '' }} ">
-                    <i class="bi bi-folder"></i>
-                    <span>Projets</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.projects') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.projects*') ? 'active' : '' }} ">
+                        <i class="bi bi-folder"></i>
+                        <span>Projets</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('admin.skills') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.skills*') ? 'active' : '' }} ">
-                    <i class="bi bi-star"></i>
-                    <span>Compétences</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.skills') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.skills*') ? 'active' : '' }} ">
+                        <i class="bi bi-star"></i>
+                        <span>Compétences</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('admin.services') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.services*') ? 'active' : '' }} ">
-                    <i class="bi bi-briefcase"></i>
-                    <span>Services</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.services') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.services*') ? 'active' : '' }} ">
+                        <i class="bi bi-briefcase"></i>
+                        <span>Services</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="#" class="admin-nav-link {{ request()->routeIs('admin.blog*') ? 'active' : '' }}">
-                    <i class="bi bi-newspaper"></i>
-                    <span>Blog</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.blog') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.blog*') ? 'active' : '' }}">
+                        <i class="bi bi-newspaper"></i>
+                        <span>Blog</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('admin.messages') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.messages*') ? 'active' : '' }} ">
-                    <i class="bi bi-envelope"></i>
-                    <span>Messages</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.messages') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.messages*') ? 'active' : '' }} ">
+                        <i class="bi bi-envelope"></i>
+                        <span>Messages</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('admin.testimonials') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.testimonials*') ? 'active' : '' }} ">
-                    <i class="bi bi-chat-quote"></i>
-                    <span>Témoignages</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.testimonials') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.testimonials*') ? 'active' : '' }} ">
+                        <i class="bi bi-chat-quote"></i>
+                        <span>Témoignages</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-divider"></div>
+                <li class="admin-nav-divider"></li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('admin.profile') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.profile') ? 'active' : '' }} ">
-                    <i class="bi bi-person"></i>
-                    <span>Profil</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.profile') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.profile') ? 'active' : '' }} ">
+                        <i class="bi bi-person"></i>
+                        <span>Profil</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('admin.settings') }}"
-                    class="admin-nav-link {{ request()->routeIs('admin.settings') ? 'active' : '' }} ">
-                    <i class="bi bi-gear"></i>
-                    <span>Paramètres</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('admin.settings') }}"
+                        class="admin-nav-link {{ request()->routeIs('admin.settings') ? 'active' : '' }} ">
+                        <i class="bi bi-gear"></i>
+                        <span>Paramètres</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-divider"></div>
+                <li class="admin-nav-divider"></li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route('index') }}" target="_blank" class="admin-nav-link">
-                    <i class="bi bi-arrow-left-circle"></i>
-                    <span>Retour au site</span>
-                </a>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route('index') }}" target="_blank" class="admin-nav-link">
+                        <i class="bi bi-arrow-left-circle"></i>
+                        <span>Retour au site</span>
+                    </a>
+                </li>
 
-            <div class="admin-nav-item">
-                <a href="{{ route("logout") }}" class="admin-nav-link text-danger"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span>Déconnexion</span>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </div>
+                <li class="admin-nav-item">
+                    <a href="{{ route("logout") }}" class="admin-nav-link text-danger"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Déconnexion</span>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
         </nav>
     </aside>
 

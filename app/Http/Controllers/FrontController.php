@@ -18,14 +18,13 @@ class FrontController extends Controller
             "skills" => Skill::where("deleted", 0)->orderBy('order')->get(),
             "projects" => Project::where("deleted", 0)->where("status", "published")->limit(4)->get(),
             "testimonials" => Testimonial::where("is_active", 1)->get(),
-            "settings" => Setting::all()->pluck('value', 'key')
         ];
         return view("index", $data);
     }
 
     public function about()
     {
-        
+
     }
 
     public function portfolio()
@@ -42,7 +41,7 @@ class FrontController extends Controller
     public function portfolioShow($slug)
     {
 
-    // dd($slug);
+        // dd($slug);
         $data = [
             "project" => Project::getOneProjetService($slug)
         ];
