@@ -17,4 +17,6 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 RUN chown -R www-data:www-data /var/www
 
+RUN php artisan storage:link
+
 CMD ["php-fpm"]
