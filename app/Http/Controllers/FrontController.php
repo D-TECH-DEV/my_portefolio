@@ -16,7 +16,7 @@ class FrontController extends Controller
         $data = [
             "services" => Service::where("deleted", 0)->orderBy('order')->get(),
             "skills" => Skill::where("deleted", 0)->orderBy('order')->get(),
-            "projects" => Project::where("deleted", 0)->where("status", "published")->limit(4)->get(),
+            "projects" => Project::where("deleted", 0)->where("status", "published")->limit(6)->get(),
             "testimonials" => Testimonial::where("is_active", 1)->get(),
         ];
         return view("index", $data);

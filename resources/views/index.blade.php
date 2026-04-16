@@ -114,7 +114,7 @@
                                 <div class="info-box-item">
                                     <i class="far fa-envelope"></i>
                                     <div class="content">
-                                        <span>Contactez-nous</span><br>
+                                        <span>Me contacter</span><br>
                                         <a href="mailto:{{ $settings['contact_email'] ?? '' }}">
                                             {{ $settings['contact_email'] ?? '' }}
                                         </a>                                    
@@ -123,8 +123,8 @@
                                 <div class="info-box-item">
                                     <i class="far fa-phone"></i>
                                     <div class="content">
-                                        <span>Appelez-nous</span><br>
-                                        <a href="callto:{{ $settings['contact_phone'] ?? '' }}">{{ $settings['contact_email'] ?? '' }}</a>
+                                        <span>Appelez-moi</span><br>
+                                        <a href="callto:{{ $settings['contact_phone'] ?? '' }}">{{ $settings['contact_phone'] ?? '' }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -351,38 +351,32 @@
                     </div>
                 </div>
             </div>
-            @forelse ($projects as $index => $project)
-                <div class="row align-items-center pb-25">
-
-                    {{-- IMAGE --}}
-                    <div class="col-lg-6 {{ $index % 2 == 1 ? 'order-lg-2' : '' }}">
-                        <div class="project-image wow fadeInLeft delay-0-2s">
-                            <img src="{{ asset($project->image) }}" alt="{{ $project->title }}">
-                        </div>
+            <div class="row">
+                @forelse ($projects as $project)
+                    <div class="col-lg-4 col-md-6 mb-30">
+                        <a href="{{ route('project.detail', ['slug' => $project->slug]) }}" class="project-card-link">
+                            <div class="project-item style-three wow fadeInUp delay-0-2s">
+                                <div class="project-image">
+                                    <img src="{{ asset($project->image) }}" alt="{{ $project->title }}" class="project-grid-image">
+                                </div>
+                                <div class="project-content">
+                                    <span class="sub-title category-badge">
+                                        <i class="fas fa-folder-open"></i> {{ $project->category->name ?? 'Projet' }}
+                                    </span>
+                                    <h4>
+                                        {{ $project->title }}
+                                    </h4>
+                                    <span class="project-btn">
+                                        <i class="far fa-arrow-right"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-
-                    {{-- CONTENT --}}
-                    <div class="col-xl-5 col-lg-6 {{ $index % 2 == 1 ? 'ms-auto' : '' }}">
-                        <div class="project-content wow fadeInRight delay-0-2s">
-
-                            <span class="sub-title">
-                                {{ $project->category->name ?? 'Projet' }}
-                            </span>
-
-                            <h2>{{ $project->title }}</h2>
-                            <p>{{ $project->description }}</p>
-
-                            <a href="{{ route('project.detail', ["slug"=> $project->slug]) }}" class="details-btn">
-                                <i class="far fa-arrow-right"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
-            @empty
-                <div class="text-center">Aucun projet</div>
-            @endforelse
+                @empty
+                    <div class="col-12 text-center">Aucun projet disponible</div>
+                @endforelse
+            </div>
 
 
             <div class="project-btn text-center wow fadeInUp delay-0-2s">
