@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
             $settings = \App\Models\Setting::all()->pluck('value', 'key');
             $view->with('settings', $settings);
         });
+
+	if (config('app.env') === 'production' || app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
