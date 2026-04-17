@@ -16,7 +16,12 @@ COPY . .
 # AJOUT DE --no-scripts ICI pour éviter la connexion à la DB pendant le build
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
+#storage
+RUN php artisan storage:link
+
 # Permissions
 RUN chown -R www-data:www-data /var/www
 
+
 CMD ["php-fpm"]
+
