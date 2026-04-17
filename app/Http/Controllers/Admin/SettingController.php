@@ -30,6 +30,13 @@ class SettingController extends Controller
             Setting::set('site_logo', $path);
         }
 
+        if ($request->hasFile('cv')) {
+            $file = $request->file('cv');
+            $filename = $file->getClientOriginalName();
+            $path = $file->storeAs('settings', $filename, 'public');
+            Setting::set('site_cv', $path);
+        }
+
         // Clear settings cache
         \Illuminate\Support\Facades\Cache::forget('site_settings');
 

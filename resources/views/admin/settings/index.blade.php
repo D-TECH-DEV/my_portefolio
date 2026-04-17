@@ -121,6 +121,33 @@
                         </div>
                     </div>
 
+                    <div class="mb-4">
+                        <label class="admin-form-label">Curriculum Vitae (CV)</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 80px; height: 80px; border-radius: 10px; border: 2px solid var(--admin-border); display: flex; align-items: center; justify-content: center; background: var(--admin-lighter);">
+                                <i class="bi bi-file-earmark-pdf" style="font-size: 40px; color: var(--admin-accent);"></i>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-admin-secondary btn-sm mb-2"
+                                    onclick="document.getElementById('cvInput').click()">
+                                    <i class="bi bi-upload me-2"></i>{{ isset($settings['site_cv']) ? 'Mettre à jour le CV' : 'Uploader le CV' }}
+                                </button>
+                                <input type="file" name="cv" id="cvInput" accept=".pdf,.doc,.docx" style="display: none;"
+                                    onchange="updateCvLabel(event)">
+                                <span id="cvFileName" style="color: var(--admin-text-base); font-size: 13px; display: block;">
+                                    @if(isset($settings['site_cv']))
+                                        <a href="{{ asset('storage/' . $settings['site_cv']) }}" target="_blank" style="color: var(--admin-accent);">
+                                            <i class="bi bi-eye me-1"></i>Voir le CV actuel
+                                        </a>
+                                    @else
+                                        Aucun fichier sélectionné
+                                    @endif
+                                </span>
+                                <p style="color: var(--admin-text-base); font-size: 13px; margin-top: 5px;">PDF, DOC, DOCX (max 5MB)</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" name="maintenance_mode" id="maintenanceMode"
                             style="cursor: pointer;" value="1" {{ ($settings['maintenance_mode'] ?? '0') == '1' ? 'checked' : '' }}>
@@ -492,6 +519,13 @@
                     document.getElementById('logoPreview').src = e.target.result;
                 }
                 reader.readAsDataURL(file);
+            }
+        }
+
+        function updateCvLabel(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('cvFileName').textContent = file.name;
             }
         }
 

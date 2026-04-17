@@ -60,11 +60,13 @@
                             Réinventons le futur ligne par ligne.</p>
                         <div class="hero-btns">
                             <a href="mailto:{{ $settings['contact_email'] ?? '' }}" class="theme-btn">Me contacter <i class="far fa-angle-right"></i></a>
-                            <a href="{{ asset('storage/' . $settings['cv_pdf']) }}" 
-                                class="read-more" 
-                                download>
-                                Mon CV <i class="far fa-angle-right"></i>
-                            </a>
+                            @if(isset($settings['site_cv']))
+                                <a href="{{ asset('storage/' . $settings['site_cv']) }}" 
+                                    class="read-more" 
+                                    download>
+                                    Mon CV <i class="far fa-angle-right"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -304,7 +306,9 @@
                                 <p>Je maîtrise les outils et langages les plus performants du marché pour garantir la
                                     robustesse et la scalabilité de vos solutions digitales.</p>
                             </div>
-                            <a href="about.html" class="theme-btn">Mon CV <i class="far fa-angle-right"></i></a>
+                            @if(isset($settings['site_cv']))
+                                <a href="{{ asset('storage/' . $settings['site_cv']) }}" class="theme-btn" download>Mon CV <i class="far fa-angle-right"></i></a>
+                            @endif
                         </div>
                     </div>
                     <div class="col-lg-7">
@@ -615,7 +619,9 @@
                         </div>
                     </div>
                     <div class="text-center ">
-                        <a href="about.html" class="theme-btn">Mon CV <i class="far fa-angle-right"></i></a>
+                        @if(isset($settings['site_cv']))
+                            <a href="{{ asset('storage/' . $settings['site_cv']) }}" class="theme-btn" download>Mon CV <i class="far fa-angle-right"></i></a>
+                        @endif
                     </div>
                 </div>
             </div>
